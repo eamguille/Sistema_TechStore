@@ -248,30 +248,39 @@ VALUES ('GT', 1),
 
 
 -- Aqui creamos los triggers para los id automatizados
-CREATE TRIGGER generar_codigo_productos
+CREATE TRIGGER generar_productoID
 ON Productos
 INSTEAD OF INSERT
 AS
 BEGIN
-    DECLARE @ultimo_codigo INT;
-    DECLARE @nuevo_codigo VARCHAR(8);
+    DECLARE @nuevoId VARCHAR(8);
+    DECLARE @ultimoId VARCHAR(8);
+    DECLARE @numero INT;
 
-    -- Obtenemos el código más alto utilizado en el campo id_producto
-    SELECT @ultimo_codigo = ISNULL(MAX(CAST(SUBSTRING(id_producto, 5, 4) AS INT)), 0) + 1
-    FROM Productos;
+    SELECT TOP 1 @ultimoId = id_producto
+    FROM Productos
+    WHERE id_producto LIKE 'PROD%'
+    ORDER BY id_producto DESC;
 
-    -- Generamos el nuevo código concatenando el prefijo 'PROD' para productos
-    SET @nuevo_codigo = CONCAT('PROD', RIGHT('00000' + CAST(@ultimo_codigo AS VARCHAR(5)), 5));
+    IF @ultimoId IS NULL
+        SET @numero = 1;
+    ELSE
+        SET @numero = CAST(SUBSTRING(@ultimoId, 5, 4) AS INT) + 1;
 
-    -- Insertamos el nuevo registro con el código generado
-    INSERT INTO Productos (id_producto, nombre_producto, descripcion_producto, id_categoria_producto, id_tipo_producto, id_modelo, precio_compra, precio_venta, cantidad_stock, estado)
-    SELECT @nuevo_codigo, nombre_producto, descripcion_producto, id_categoria_producto, id_tipo_producto, id_modelo, precio_compra, precio_venta, cantidad_stock, estado
+    SET @nuevoId = 'PROD' + RIGHT('0000' + CAST(@numero AS VARCHAR(4)), 4);
+
+    INSERT INTO Productos (id_producto, nombre_producto, descripcion_producto, id_categoria_producto,
+                           id_tipo_producto, id_modelo, precio_compra, precio_venta, cantidad_stock, estado)
+    SELECT @nuevoId, nombre_producto, descripcion_producto, id_categoria_producto,
+           id_tipo_producto, id_modelo, precio_compra, precio_venta, cantidad_stock, estado
     FROM inserted;
 END;
 
 -- Prueba insersion en Productos
 INSERT INTO Productos(nombre_producto, descripcion_producto, id_categoria_producto, id_tipo_producto, id_modelo, precio_compra, precio_venta, cantidad_stock, estado)
-VALUES ('Huawei', 'Celular avanzado ultima generacion', 1, 2, 3, 56, 120, 10, 'Disponible')
+VALUES ('HOLA ESTO ES UNA PRUEBA', 'Transformer', 1, 2, 3, 56, 120, 10, 'Disponible')
+
+SELECT * FROM Productos
 
 CREATE TRIGGER generar_codigo_usuarios
 ON Usuarios
@@ -305,3 +314,5 @@ CREATE PROCEDURE sp_login
 AS BEGIN
 	SELECT * FROM Usuarios WHERE nombre_usuario = @nombre_usuario AND clave = @clave
 END;
+
+DROP TRIGGER generar_productoID
