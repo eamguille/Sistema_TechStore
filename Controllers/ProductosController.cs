@@ -68,6 +68,7 @@ namespace Techstore_WebApp.Controllers
 
             if (categoria != null && tipoProducto != null && modelo != null)
             {
+                producto.IdProducto = GenerarID();
                 producto.IdCategoriaProductoNavigation = categoria;
                 producto.IdModeloNavigation = modelo;
                 producto.IdTipoProductoNavigation = tipoProducto;
@@ -184,6 +185,29 @@ namespace Techstore_WebApp.Controllers
         private bool ProductoExists(string id)
         {
             return _context.Productos.Any(e => e.IdProducto == id);
+        }
+
+
+        // Creamos un metodo para asignar un id_producto automaticamente en la base
+        private string GenerarID() {
+            var ultimoProducto = _context.Productos
+            .OrderByDescending(p => p.IdProducto)
+            .FirstOrDefault();
+
+            if(ultimoProducto == null) {
+                return "PROD0001";
+            }
+
+            string ultimoID = ultimoProducto.IdProducto;
+            int numero;
+
+            if(int.TryParse(ultimoID.Substring(4), out numero)) {
+                numero++;
+                return $"PROD{numero:D4}";
+            }
+
+            // finalmente si no se pudo convertir devolvemos el id inicial
+            return "PROD0001";
         }
     }
 }
