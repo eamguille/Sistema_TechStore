@@ -1,0 +1,43 @@
+@{
+    Layout = null;
+    ViewData["Title"] = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="en" class="overflow-hidden">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesion</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<body>
+
+    <div class="container min-vh-100 d-flex justify-content-center align-items-center">
+        <div class="col-md-6 p-4 form-container rounded">
+            <form asp-controller="Account" asp-action="Login" method="post">
+                <div class="mb-3">
+                    <label for="NombreUsuario" class="form-label">Nombre de usuario</label>
+                    <input type="text" class="form-control" id="NombreUsuario" name="NombreUsuario" required
+                        autocomplete="off">
+                </div>
+                <div class="mb-3">
+                    <label for="Clave" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="Clave" name="Clave">
+                </div>
+                <div class="mb-3">
+                    <a href="#">¿Olvidaste tu contraseña?</a>
+                </div>
+                <button type="submit" class="btn btn-primary">Ingresar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

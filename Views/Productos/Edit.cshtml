@@ -1,0 +1,71 @@
+@model Techstore_WebApp.Models.DB.Producto
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Producto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdProducto" />
+            <div class="form-group">
+                <label asp-for="NombreProducto" class="control-label"></label>
+                <input asp-for="NombreProducto" class="form-control" />
+                <span asp-validation-for="NombreProducto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DescripcionProducto" class="control-label"></label>
+                <input asp-for="DescripcionProducto" class="form-control" />
+                <span asp-validation-for="DescripcionProducto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdCategoriaProducto" class="control-label"></label>
+                <select asp-for="IdCategoriaProducto" class="form-control" asp-items="ViewBag.IdCategoriaProducto"></select>
+                <span asp-validation-for="IdCategoriaProducto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdTipoProducto" class="control-label"></label>
+                <select asp-for="IdTipoProducto" class="form-control" asp-items="ViewBag.IdTipoProducto"></select>
+                <span asp-validation-for="IdTipoProducto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdModelo" class="control-label"></label>
+                <select asp-for="IdModelo" class="form-control" asp-items="ViewBag.IdModelo"></select>
+                <span asp-validation-for="IdModelo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrecioCompra" class="control-label"></label>
+                <input asp-for="PrecioCompra" class="form-control" />
+                <span asp-validation-for="PrecioCompra" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrecioVenta" class="control-label"></label>
+                <input asp-for="PrecioVenta" class="form-control" />
+                <span asp-validation-for="PrecioVenta" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CantidadStock" class="control-label"></label>
+                <input asp-for="CantidadStock" class="form-control" />
+                <span asp-validation-for="CantidadStock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Estado" class="control-label"></label>
+                <input asp-for="Estado" class="form-control" />
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,0 +1,92 @@
+@model IEnumerable<Techstore_WebApp.Models.DB.Producto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2 class="mb-5">PRODUCTOS</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Crear nuevo producto</a>
+</p>
+<table class="table table-striped">
+    <thead class="table-header">
+        <tr class="text-center align-middle">
+            <th>
+                @* @Html.DisplayNameFor(model => model.NombreProducto) *@
+                Nombre Producto
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.DescripcionProducto) *@
+                Descripcion
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.PrecioCompra) *@
+                Precio Compra
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.PrecioVenta) *@
+                Precio Venta
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.CantidadStock) *@
+                Cantidad Stock
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.Estado) *@
+                Estado
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.IdCategoriaProductoNavigation) *@
+                Categoria
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.IdModeloNavigation) *@
+                Modelo
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.IdTipoProductoNavigation) *@
+                Tipo Producto
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr class="text-center align-middle">
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreProducto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescripcionProducto)
+            </td>
+            <td>
+                $@Html.DisplayFor(modelItem => item.PrecioCompra)
+            </td>
+            <td>
+                $@Html.DisplayFor(modelItem => item.PrecioVenta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantidadStock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCategoriaProductoNavigation.Categoria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdModeloNavigation.Modelo1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdTipoProductoNavigation.TipoProducto)
+            </td>
+            <td class="float-right">
+                <a asp-action="Edit" class="btn btn-primary my-1" asp-route-id="@item.IdProducto">Edit</a>
+                <a asp-action="Details" class="btn btn-warning my-1" asp-route-id="@item.IdProducto">Details</a>
+                <a asp-action="Delete" class="btn btn-danger my-1" asp-route-id="@item.IdProducto">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
