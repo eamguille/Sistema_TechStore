@@ -18,6 +18,7 @@
 
     <div class="container min-vh-100 d-flex justify-content-center align-items-center">
         <div class="col-md-6 p-4 form-container rounded">
+            <h2 class="text-center mb-4">Inicia Sesion!</h2>
             <form asp-controller="Account" asp-action="Login" method="post">
                 <div class="mb-3">
                     <label for="NombreUsuario" class="form-label">Nombre de usuario</label>
@@ -28,10 +29,15 @@
                     <label for="Clave" class="form-label">Contraseña</label>
                     <input type="password" class="form-control" id="Clave" name="Clave">
                 </div>
-                <div class="mb-3">
+                <div class="d-flex justify-content-end align-items-center mb-3">
                     <a href="#">¿Olvidaste tu contraseña?</a>
                 </div>
-                <button type="submit" class="btn btn-primary">Ingresar</button>
+                <div class="d-flex justify-content-center mb-4">
+                    <button type="submit" class="btn btn-primary">Ingresar</button>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p>¿No tienes una cuenta? <a asp-controller="Account" asp-action="Register">Regístrate</a></p>
+                </div>
             </form>
         </div>
     </div>

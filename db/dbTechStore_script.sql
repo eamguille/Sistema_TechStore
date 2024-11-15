@@ -249,3 +249,7 @@ VALUES ('GT', 1),
 -- Aqui creamos un usuario para probar el login en el sistema
 INSERT INTO Usuarios
 VALUES ('U00001', 'Guillermo', 'Castillo', 'root', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'random@gmail.com', '7633-5320', 'San Salvador', 'root')
+
+SELECT * FROM Usuarios
+
+DELETE FROM Usuarios WHERE id_usuario = 'U00003';
