@@ -2,7 +2,91 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">@ViewData["usuario"]</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-left">
+    <h4>@ViewData["usuario"]</h4>
+    @* <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p> *@
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6 col-sm-12 mb-3">
+                <canvas asp-action="ObtenerVentasPorMes" asp-controller="Charts" id="ventasPorMesChart"></canvas>
+                <div>
+                    <h4 id="mensaje"></h4>
+                </div>
+            </div>
+            @* <div class="col-md-6 col-sm-12 mb-3">
+                <canvas id="chart2"></canvas>
+            </div> *@
+        </div>
+    </div>
 </div>
+
+<style>
+    canvas {
+        max-height: 400px;
+    }
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    let mensaje = document.getElementById("mensaje");
+
+    async function cargarVentasPorMes() {
+        try {
+            const response = await fetch('/Charts/ObtenerVentasPorMes');
+            if (!response.ok) {
+                throw new Error('Error al obtener los datos de ventas.');
+            }
+            const data = await response.json();
+            console.log(data);
+
+            // Etiquetas y datos para el gráfico
+            const etiquetas = data.map(item => `${item.Mes}/${item.Anio}`);
+            const totales = data.map(item => item.TotalVentas);
+
+            const ctx = document.getElementById('ventasPorMesChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: etiquetas,
+                    datasets: [{
+                        label: 'Total Ventas',
+                        data: totales,
+                        backgroundColor: [
+                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40',
+                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
+                        ],
+                        borderColor: '#ffffff',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    let label = context.label || '';
+                                    let value = context.raw || 0;
+                                    return `${label}: $${value.toFixed(2)}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        } catch (error) {
+            console.error(error);
+            mensaje.textContent = 'Error al cargar el grafico.';
+        }
+    }
+
+    cargarVentasPorMes();
+
+</script>

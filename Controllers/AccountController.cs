@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Techstore_WebApp.Controllers 
 {
@@ -59,7 +60,7 @@ namespace Techstore_WebApp.Controllers
             // Aqui redireccionamos al usuario segun su rol
             if(usuario.Rol == "administrador" || usuario.Rol == "root" || usuario.Rol == "empleado")
             {
-                Response.Cookies.Append("usuario", "Bienvenido " + usuario.NombreUsuario);
+                Response.Cookies.Append("usuario", "Hola de nuevo! " + usuario.Nombres);
                 return RedirectToAction("Index", "Home");
             } else {
                 return View();
@@ -69,6 +70,7 @@ namespace Techstore_WebApp.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync("TechStoreCookie");
+            Response.Cookies.Delete("usuario");
             return RedirectToAction("Login");
         }
 
@@ -98,6 +100,19 @@ namespace Techstore_WebApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Login));
             }
+            return View(usuario);
+        }
+
+        [Authorize]
+        public IActionResult Profile() {
+            var nombreUsuario = User.FindFirstValue(ClaimTypes.Name);
+
+            var usuario = _context.Usuarios.FirstOrDefault(u => u.NombreUsuario == nombreUsuario);
+
+            if(usuario == null) {
+                return NotFound("Usuario no encontrado.");
+            }
+
             return View(usuario);
         }
 

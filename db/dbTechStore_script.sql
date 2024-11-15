@@ -250,6 +250,9 @@ VALUES ('GT', 1),
 INSERT INTO Usuarios
 VALUES ('U00001', 'Guillermo', 'Castillo', 'root', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'random@gmail.com', '7633-5320', 'San Salvador', 'root')
 
-SELECT * FROM Usuarios
+SELECT * FROM "Ventas_Empresa"
 
 DELETE FROM Usuarios WHERE id_usuario = 'U00003';
+
+INSERT INTO Ventas_Empresa
+VALUES (1,'U00003','2024-12-12',700, 'Efectivo', 'Completada');
