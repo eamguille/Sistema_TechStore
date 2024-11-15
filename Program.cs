@@ -11,6 +11,15 @@ builder.Services.AddSession(options => {
     options.IdleTimeout = TimeSpan.FromMinutes(5);
 });
 
+// Agregamos autenticacion por Cookies
+builder.Services.AddAuthentication("TechStoreCookie")
+    .AddCookie("TechStoreCookie", options => {
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/Logout";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(12);
+        options.SlidingExpiration = true;
+    });
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -29,7 +38,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseSession();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

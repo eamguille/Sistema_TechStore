@@ -52,41 +52,47 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr class="text-center align-middle">
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreProducto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DescripcionProducto)
-            </td>
-            <td>
-                $@Html.DisplayFor(modelItem => item.PrecioCompra)
-            </td>
-            <td>
-                $@Html.DisplayFor(modelItem => item.PrecioVenta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CantidadStock)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdCategoriaProductoNavigation.Categoria)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdModeloNavigation.Modelo1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdTipoProductoNavigation.TipoProducto)
-            </td>
-            <td class="float-right">
-                <a asp-action="Edit" class="btn btn-primary my-1" asp-route-id="@item.IdProducto">Edit</a>
-                <a asp-action="Details" class="btn btn-warning my-1" asp-route-id="@item.IdProducto">Details</a>
-                <a asp-action="Delete" class="btn btn-danger my-1" asp-route-id="@item.IdProducto">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr class="text-center align-middle">
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreProducto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DescripcionProducto)
+                </td>
+                <td>
+                    $@Html.DisplayFor(modelItem => item.PrecioCompra)
+                </td>
+                <td>
+                    $@Html.DisplayFor(modelItem => item.PrecioVenta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CantidadStock)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdCategoriaProductoNavigation.Categoria)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdModeloNavigation.Modelo1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdTipoProductoNavigation.TipoProducto)
+                </td>
+                <td>
+                    <div class="d-flex flex-nowrap">
+                        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.IdProducto" title="Editar"><i
+                                class="bi bi-pencil-square text-white"></i></a>
+                        <a asp-action="Details" class="btn btn-warning mx-2" asp-route-id="@item.IdProducto"
+                            title="Detalles"><i class="bi bi-archive text-white"></i></a>
+                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.IdProducto" title="Eliminar"><i
+                                class="bi bi-trash-fill text-white"></i></a>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

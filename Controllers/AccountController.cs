@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Techstore_WebApp.Models.DB;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace Techstore_WebApp.Controllers 
 {
@@ -22,7 +24,7 @@ namespace Techstore_WebApp.Controllers
         // POST: /Account/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(string nombreUsuario, string clave)
+        public async Task<IActionResult> Login(string nombreUsuario, string clave)
         {
             if(string.IsNullOrEmpty(nombreUsuario) || string.IsNullOrEmpty(clave))
             {
@@ -40,13 +42,22 @@ namespace Techstore_WebApp.Controllers
                 return View();
             }
 
-            // Aqui guardamos la informacion del usuario logueado en la sesion creada
-            HttpContext.Session.SetString("UsuarioId", usuario.IdUsuario);
-            HttpContext.Session.SetString("NombreUsuario", usuario.NombreUsuario);
-            HttpContext.Session.SetString("Rol", usuario.Rol);
+            var claims = new List<Claim>{
+                new Claim(ClaimTypes.Name, usuario.NombreUsuario),
+                new Claim(ClaimTypes.Role, usuario.Rol),
+                new Claim("IdUsuario", usuario.IdUsuario.ToString())
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, "TechStoreCookie");
+            var authProperties = new AuthenticationProperties {
+                IsPersistent = true,
+                ExpiresUtc = DateTime.UtcNow.AddMinutes(12)
+            };
+
+            await HttpContext.SignInAsync("TechStoreCookie", new ClaimsPrincipal(claimsIdentity), authProperties);
 
             // Aqui redireccionamos al usuario segun su rol
-            if(usuario.Rol == "administrador" || usuario.Rol == "root")
+            if(usuario.Rol == "administrador" || usuario.Rol == "root" || usuario.Rol == "empleado")
             {
                 Response.Cookies.Append("usuario", "Bienvenido " + usuario.NombreUsuario);
                 return RedirectToAction("Index", "Home");
@@ -55,10 +66,9 @@ namespace Techstore_WebApp.Controllers
             }
         }
 
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            HttpContext.Session.Clear();
-            Response.Cookies.Delete("usuario");
+            await HttpContext.SignOutAsync("TechStoreCookie");
             return RedirectToAction("Login");
         }
 
