@@ -6,9 +6,17 @@
 
 <h2 class="mb-5">Categorias</h2>
 
-<p>
-    <a asp-action="Create" class="btn btn-success">Agregar nueva categoria</a>
-</p>
+<div class="d-flex justify-content-between">
+    <div>
+        <p>
+            <a asp-action="Create" class="btn btn-success">Agregar nueva categoria</a>
+        </p>
+    </div>
+    <div class="w-50">
+        <input type="text" id="buscador" class="form-control" placeholder="Busca una categoria...">
+    </div>
+</div>
+
 <table class="table table-striped">
     <thead class="table-header">
         <tr class="text-center align-middle">
@@ -27,12 +35,12 @@
                 </td>
                 <td>
                     <div class="d-flex flex-nowrap justify-content-center">
-                        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.IdCategoriaProducto" title="Editar"><i
-                                class="bi bi-pencil-square text-white"></i></a>
+                        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.IdCategoriaProducto"
+                            title="Editar"><i class="bi bi-pencil-square text-white"></i></a>
                         <a asp-action="Details" class="btn btn-warning mx-2" asp-route-id="@item.IdCategoriaProducto"
                             title="Detalles"><i class="bi bi-archive text-white"></i></a>
-                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.IdCategoriaProducto" title="Eliminar"><i
-                                class="bi bi-trash-fill text-white"></i></a>
+                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.IdCategoriaProducto"
+                            title="Eliminar"><i class="bi bi-trash-fill text-white"></i></a>
                     </div>
                 </td>
             </tr>

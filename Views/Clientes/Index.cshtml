@@ -6,9 +6,17 @@
 
 <h2 class="mb-5">Clientes</h2>
 
-<p>
-    <a asp-action="Create" class="btn btn-success">Agregar nuevo cliente</a>
-</p>
+<div class="d-flex justify-content-between">
+    <div>
+        <p>
+            <a asp-action="Create" class="btn btn-success">Agregar nuevo cliente</a>
+        </p>
+    </div>
+    <div class="w-50">
+        <input type="text" id="buscador" class="form-control" placeholder="Busca un cliente...">
+    </div>
+</div>
+
 <table class="table table-striped">
     <thead class="table-header">
         <tr class="text-center align-middle">

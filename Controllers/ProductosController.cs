@@ -188,10 +188,21 @@ namespace Techstore_WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Buscador(string texto) {
-            var productos = await _context.Productos
-            .Where(p => p.NombreProducto.Contains(texto) || p.DescripcionProducto.Contains(texto))
-            .Select(p => new {
+        public async Task<IActionResult> Buscador(string texto)
+        {
+            var query = _context.Productos
+                .Include(p => p.IdCategoriaProductoNavigation)
+                .Include(p => p.IdModeloNavigation)
+                .Include(p => p.IdTipoProductoNavigation)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(texto))
+            {
+                query = query.Where(p => p.NombreProducto.Contains(texto) || p.DescripcionProducto.Contains(texto));
+            }
+
+            var productos = await query.Select(p => new
+            {
                 p.IdProducto,
                 p.NombreProducto,
                 p.DescripcionProducto,
@@ -202,27 +213,29 @@ namespace Techstore_WebApp.Controllers
                 p.IdModeloNavigation.Modelo1,
                 p.IdTipoProductoNavigation.TipoProducto,
                 p.IdCategoriaProductoNavigation.Categoria
-            })
-            .ToListAsync();
+            }).ToListAsync();
 
             return Json(productos);
         }
 
 
         // Creamos un metodo para asignar un id_producto automaticamente en la base
-        private string GenerarID() {
+        private string GenerarID()
+        {
             var ultimoProducto = _context.Productos
             .OrderByDescending(p => p.IdProducto)
             .FirstOrDefault();
 
-            if(ultimoProducto == null) {
+            if (ultimoProducto == null)
+            {
                 return "PROD0001";
             }
 
             string ultimoID = ultimoProducto.IdProducto;
             int numero;
 
-            if(int.TryParse(ultimoID.Substring(4), out numero)) {
+            if (int.TryParse(ultimoID.Substring(4), out numero))
+            {
                 numero++;
                 return $"PROD{numero:D4}";
             }

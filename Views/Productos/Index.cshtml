@@ -16,6 +16,7 @@
         <input type="text" id="buscador" class="form-control" placeholder="Busca un producto...">
     </div>
 </div>
+
 <table class="table table-striped">
     <thead class="table-header">
         <tr class="text-center align-middle">
@@ -109,27 +110,33 @@
         const texto = e.target.value.trim();
 
         try {
+            // Realizar la búsqueda, incluso si el texto está vacío
             const response = await fetch(`/Productos/Buscador?texto=${texto}`);
             if (!response.ok) {
                 throw new Error('Error al buscar el producto');
             }
 
             const productos = await response.json();
-            console.log(productos);
             actualizarTabla(productos);
         } catch (error) {
             console.error(error);
         }
+    });
 
-        function actualizarTabla(productos) {
-            const tabla = document.getElementById('cuerpoTabla');
-            tabla.innerHTML = '';
+    function actualizarTabla(productos) {
+        const tabla = document.getElementById('cuerpoTabla');
+        tabla.innerHTML = '';
 
-            productos.forEach(producto => {
-                const fila = document.createElement('tr');
-                fila.classList.add('text-center', 'align-middle');
+        if (productos.length === 0) {
+            tabla.innerHTML = '<tr><td colspan="9" class="text-center">No se encontraron productos.</td></tr>';
+            return;
+        }
 
-                fila.innerHTML = `
+        productos.forEach(producto => {
+            const fila = document.createElement('tr');
+            fila.classList.add('text-center', 'align-middle');
+
+            fila.innerHTML = `
                 <td>${producto.nombreProducto}</td>
                 <td>${producto.descripcionProducto}</td>
                 <td>$${producto.precioCompra}</td>
@@ -147,8 +154,7 @@
                     </div>
                 </td>
             `;
-                tabla.appendChild(fila);
-            });
-        }
-    });
+            tabla.appendChild(fila);
+        });
+    }
 </script>
