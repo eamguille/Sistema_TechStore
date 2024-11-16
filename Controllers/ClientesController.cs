@@ -152,5 +152,33 @@ namespace Techstore_WebApp.Controllers
         {
             return _context.Clientes.Any(e => e.IdCliente == id);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Buscador(string texto)
+        {
+            var query = _context.Clientes.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(texto))
+            {
+                query = query.Where(c =>
+                    c.NombreCliente.Contains(texto) ||
+                    c.Dui.Contains(texto) ||
+                    c.Telefono.Contains(texto) ||
+                    c.Email.Contains(texto) ||
+                    c.Direccion.Contains(texto));
+            }
+
+            var clientes = await query.Select(c => new
+            {
+                c.IdCliente,
+                c.NombreCliente,
+                c.Dui,
+                c.Telefono,
+                c.Email,
+                c.Direccion
+            }).ToListAsync();
+
+            return Json(clientes);
+        }
     }
 }

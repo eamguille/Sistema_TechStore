@@ -38,7 +38,7 @@
             <th>Acciones</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="cuerpoTabla">
         @foreach (var item in Model)
         {
             <tr class="text-center align-middle">
@@ -71,3 +71,53 @@
         }
     </tbody>
 </table>
+
+<script>
+    document.getElementById('buscador').addEventListener('keyup', async (e) => {
+        const texto = e.target.value.trim();
+
+        try {
+            // Realizar la búsqueda, incluso si el texto está vacío
+            const response = await fetch(`/Clientes/Buscador?texto=${texto}`);
+            if (!response.ok) {
+                throw new Error('Error al buscar el cliente');
+            }
+
+            const clientes = await response.json();
+            actualizarTabla(clientes);
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+    function actualizarTabla(clientes) {
+        const tabla = document.getElementById('cuerpoTabla');
+        tabla.innerHTML = '';
+
+        if (clientes.length === 0) {
+            tabla.innerHTML = '<tr><td colspan="9" class="text-center">No se encontraron clientes.</td></tr>';
+            return;
+        }
+
+        clientes.forEach(cliente => {
+            const fila = document.createElement('tr');
+            fila.classList.add('text-center', 'align-middle');
+
+            fila.innerHTML = `
+                <td>${cliente.nombreCliente}</td>
+                <td>${cliente.dui}</td>
+                <td>$${cliente.telefono}</td>
+                <td>$${cliente.email}</td>
+                <td>${cliente.direccion}</td>
+                <td>
+                    <div class="d-flex flex-nowrap">
+                        <a href="/Clientes/Edit/${cliente.idCliente}" class="btn btn-primary" title="Editar"><i class="bi bi-pencil-square text-white"></i></a>
+                        <a href="/Clientes/Details/${cliente.idCliente}" class="btn btn-warning mx-2" title="Detalles"><i class="bi bi-archive text-white"></i></a>
+                        <a href="/Clientes/Delete/${cliente.idCliente}" class="btn btn-danger" title="Eliminar"><i class="bi bi-trash-fill text-white"></i></a>
+                    </div>
+                </td>
+            `;
+            tabla.appendChild(fila);
+        });
+    }
+</script>

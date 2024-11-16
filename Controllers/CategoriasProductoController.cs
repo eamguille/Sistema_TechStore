@@ -152,5 +152,21 @@ namespace Techstore_WebApp.Controllers
         {
             return _context.CategoriasProductos.Any(e => e.IdCategoriaProducto == id);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Buscador(string texto) {
+            var query = _context.CategoriasProductos.AsQueryable();
+
+            if(!string.IsNullOrWhiteSpace(texto)) {
+                query = query.Where(c => c.Categoria.Contains(texto));
+            }
+
+            var categorias = await query.Select(c => new {
+                c.IdCategoriaProducto,
+                c.Categoria
+            }).ToListAsync();
+
+            return Json(categorias);
+        }
     }
 }

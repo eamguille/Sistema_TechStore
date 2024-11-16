@@ -101,6 +101,22 @@ namespace Techstore_WebApp.Controllers
             {
                 try
                 {
+                    var usuarioExistente = await _context.Usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.IdUsuario == id);
+
+                    if (usuarioExistente == null)
+                    {
+                        return NotFound();
+                    }
+
+                    if (string.IsNullOrWhiteSpace(usuario.Clave))
+                    {
+                        usuario.Clave = usuarioExistente.Clave;
+                    }
+                    else
+                    {
+                        usuario.Clave = EncriptarClaveGenerada(usuario.Clave);
+                    }
+
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
                 }
@@ -158,19 +174,22 @@ namespace Techstore_WebApp.Controllers
             return _context.Usuarios.Any(e => e.IdUsuario == id);
         }
 
-                private string GenerarID() {
+        private string GenerarID()
+        {
             var ultimoUsuario = _context.Usuarios
             .OrderByDescending(u => u.IdUsuario)
             .FirstOrDefault();
 
-            if(ultimoUsuario == null){
+            if (ultimoUsuario == null)
+            {
                 return "U00001";
             }
 
             string ultimoID = ultimoUsuario.IdUsuario;
             int numero;
 
-            if(int.TryParse(ultimoID.Substring(1), out numero)){
+            if (int.TryParse(ultimoID.Substring(1), out numero))
+            {
                 numero++;
                 return $"U{numero:D5}";
             }
@@ -178,16 +197,51 @@ namespace Techstore_WebApp.Controllers
             return "U00001";
         }
 
-        private string EncriptarClaveGenerada(string clave) {
-            using(SHA256 sha256 = SHA256.Create()) {
+        private string EncriptarClaveGenerada(string clave)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
                 byte[] bytes = Encoding.UTF8.GetBytes(clave);
                 byte[] hash = sha256.ComputeHash(bytes);
                 StringBuilder resultado = new StringBuilder();
-                foreach (byte b in hash) {
+                foreach (byte b in hash)
+                {
                     resultado.Append(b.ToString("x2"));
                 }
                 return resultado.ToString();
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Buscador(string texto)
+        {
+            var query = _context.Usuarios.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(texto))
+            {
+                query = query.Where(c =>
+                    c.Nombres.Contains(texto) ||
+                    c.Apellidos.Contains(texto) ||
+                    c.NombreUsuario.Contains(texto) ||
+                    c.Email.Contains(texto) ||
+                    c.Telefono.Contains(texto) ||
+                    c.Direccion.Contains(texto) ||
+                    c.Rol.Contains(texto));
+            }
+
+            var usuarios = await query.Select(c => new
+            {
+                c.IdUsuario,
+                c.Nombres,
+                c.Apellidos,
+                c.NombreUsuario,
+                c.Email,
+                c.Telefono,
+                c.Direccion,
+                c.Rol
+            }).ToListAsync();
+
+            return Json(usuarios);
         }
     }
 }
