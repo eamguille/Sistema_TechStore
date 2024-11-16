@@ -256,3 +256,14 @@ DELETE FROM Usuarios WHERE id_usuario = 'U00003';
 
 INSERT INTO Ventas_Empresa
 VALUES (1,'U00003','2024-12-12',700, 'Efectivo', 'Completada');
+
+UPDATE "Ventas_Empresa" SET fecha_venta = '2024-10-12' WHERE id_venta = 3
+
+SELECT * FROM "Productos";
+
+UPDATE Productos SET id_producto = 'PROD00001' WHERE id_producto = 'P00002';
+UPDATE Productos SET id_producto = 'PROD00002' WHERE id_producto = 'P00003';
+UPDATE Productos SET id_producto = 'PROD00003' WHERE id_producto = 'PROD0000';
+
+INSERT INTO Detalles_Ventas
+VALUES ('DV00003',2,'P00002',10,24);

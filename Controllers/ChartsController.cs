@@ -28,4 +28,31 @@ public class ChartsController : Controller
         Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(datos));
         return Json(datos);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Obtener5ProductosMasVendidos()
+    {
+        var productosMasVendidos = await _context.DetallesVentas
+        .Join(_context.Productos,
+              detalle => detalle.IdProducto,
+              producto => producto.IdProducto,
+              (detalle, producto) => new
+              {
+                  producto.NombreProducto,
+                  detalle.Cantidad,
+                  detalle.PrecioUnitario
+              })
+        .GroupBy(x => x.NombreProducto)
+        .Select(g => new
+        {
+            NombreProducto = g.Key,
+            CantidadTotal = g.Sum(x => x.Cantidad),
+            PrecioPromedio = g.Average(x => x.PrecioUnitario)
+        })
+        .OrderByDescending(x => x.CantidadTotal)
+        .Take(5)
+        .ToListAsync();
+
+        return Json(productosMasVendidos);
+    }
 }
