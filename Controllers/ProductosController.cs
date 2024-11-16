@@ -187,6 +187,27 @@ namespace Techstore_WebApp.Controllers
             return _context.Productos.Any(e => e.IdProducto == id);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Buscador(string texto) {
+            var productos = await _context.Productos
+            .Where(p => p.NombreProducto.Contains(texto) || p.DescripcionProducto.Contains(texto))
+            .Select(p => new {
+                p.IdProducto,
+                p.NombreProducto,
+                p.DescripcionProducto,
+                p.PrecioCompra,
+                p.PrecioVenta,
+                p.CantidadStock,
+                p.Estado,
+                p.IdModeloNavigation.Modelo1,
+                p.IdTipoProductoNavigation.TipoProducto,
+                p.IdCategoriaProductoNavigation.Categoria
+            })
+            .ToListAsync();
+
+            return Json(productos);
+        }
+
 
         // Creamos un metodo para asignar un id_producto automaticamente en la base
         private string GenerarID() {

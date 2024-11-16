@@ -4,11 +4,18 @@
     ViewData["Title"] = "Index";
 }
 
-<h2 class="mb-5">PRODUCTOS</h2>
+<h2 class="mb-5">Productos</h2>
 
-<p>
-    <a asp-action="Create" class="btn btn-success">Crear nuevo producto</a>
-</p>
+<div class="d-flex justify-content-between">
+    <div>
+        <p>
+            <a asp-action="Create" class="btn btn-success">Crear nuevo producto</a>
+        </p>
+    </div>
+    <div class="w-50">
+        <input type="text" id="buscador" class="form-control" placeholder="Busca un producto...">
+    </div>
+</div>
 <table class="table table-striped">
     <thead class="table-header">
         <tr class="text-center align-middle">
@@ -51,7 +58,7 @@
             <th>Acciones</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="cuerpoTabla">
         @foreach (var item in Model)
         {
             <tr class="text-center align-middle">
@@ -96,3 +103,52 @@
         }
     </tbody>
 </table>
+
+<script>
+    document.getElementById('buscador').addEventListener('keyup', async (e) => {
+        const texto = e.target.value.trim();
+
+        try {
+            const response = await fetch(`/Productos/Buscador?texto=${texto}`);
+            if (!response.ok) {
+                throw new Error('Error al buscar el producto');
+            }
+
+            const productos = await response.json();
+            console.log(productos);
+            actualizarTabla(productos);
+        } catch (error) {
+            console.error(error);
+        }
+
+        function actualizarTabla(productos) {
+            const tabla = document.getElementById('cuerpoTabla');
+            tabla.innerHTML = '';
+
+            productos.forEach(producto => {
+                const fila = document.createElement('tr');
+                fila.classList.add('text-center', 'align-middle');
+
+                fila.innerHTML = `
+                <td>${producto.nombreProducto}</td>
+                <td>${producto.descripcionProducto}</td>
+                <td>$${producto.precioCompra}</td>
+                <td>$${producto.precioVenta}</td>
+                <td>${producto.cantidadStock}</td>
+                <td>${producto.estado}</td>
+                <td>${producto.categoria}</td>
+                <td>${producto.modelo1}</td>
+                <td>${producto.tipoProducto}</td>
+                <td>
+                    <div class="d-flex flex-nowrap">
+                        <a href="/Productos/Edit/${producto.idProducto}" class="btn btn-primary" title="Editar"><i class="bi bi-pencil-square text-white"></i></a>
+                        <a href="/Productos/Details/${producto.idProducto}" class="btn btn-warning mx-2" title="Detalles"><i class="bi bi-archive text-white"></i></a>
+                        <a href="/Productos/Delete/${producto.idProducto}" class="btn btn-danger" title="Eliminar"><i class="bi bi-trash-fill text-white"></i></a>
+                    </div>
+                </td>
+            `;
+                tabla.appendChild(fila);
+            });
+        }
+    });
+</script>
