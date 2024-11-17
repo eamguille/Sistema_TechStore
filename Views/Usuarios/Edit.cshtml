@@ -1,82 +1,66 @@
 @model Techstore_WebApp.Models.DB.Usuario
 
 @{
-    ViewData["Title"] = "Editar Usuario";
+    ViewData["Title"] = "Edit";
 }
 
-<h1 class="text-center mb-4">Editar Usuario</h1>
+<h1>Edit</h1>
 
-<div class="container">
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <h5 class="card-title text-center text-uppercase text-primary mb-4">Actualizar Información del Usuario</h5>
-            <hr />
-            <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-                <input type="hidden" asp-for="IdUsuario" />
-
-                <div class="mb-3">
-                    <label asp-for="Nombres" class="form-label fw-bold">Nombres</label>
-                    <input asp-for="Nombres" class="form-control" />
-                    <span asp-validation-for="Nombres" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Apellidos" class="form-label fw-bold">Apellidos</label>
-                    <input asp-for="Apellidos" class="form-control" />
-                    <span asp-validation-for="Apellidos" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="NombreUsuario" class="form-label fw-bold">Nombre de Usuario</label>
-                    <input asp-for="NombreUsuario" class="form-control" />
-                    <span asp-validation-for="NombreUsuario" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Clave" class="form-label fw-bold">Clave</label>
-                    <input asp-for="Clave" class="form-control" type="password"
-                           placeholder="Dejar vacío si no desea cambiar la clave" />
-                    <span asp-validation-for="Clave" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Email" class="form-label fw-bold">Correo Electrónico</label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Telefono" class="form-label fw-bold">Teléfono</label>
-                    <input asp-for="Telefono" class="form-control" />
-                    <span asp-validation-for="Telefono" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Direccion" class="form-label fw-bold">Dirección</label>
-                    <input asp-for="Direccion" class="form-control" />
-                    <span asp-validation-for="Direccion" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="Rol" class="form-label fw-bold">Rol</label>
-                    <select asp-for="Rol" class="form-select">
-                        <option value="Administrador">Administrador</option>
-                        <option value="Usuario">Usuario</option>
-                        <option value="Invitado">Invitado</option>
-                    </select>
-                    <span asp-validation-for="Rol" class="text-danger"></span>
-                </div>
-
-                <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-save"></i> Guardar Cambios
-                    </button>
-                    <a asp-action="Index" class="btn btn-secondary">
-                        <i class="bi bi-arrow-left"></i> Regresar a la Lista
-                    </a>
-                </div>
-            </form>
-        </div>
+<h4>Usuario</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdUsuario" />
+            <div class="form-group">
+                <label asp-for="Nombres" class="control-label"></label>
+                <input asp-for="Nombres" class="form-control" />
+                <span asp-validation-for="Nombres" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Apellidos" class="control-label"></label>
+                <input asp-for="Apellidos" class="form-control" />
+                <span asp-validation-for="Apellidos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NombreUsuario" class="control-label"></label>
+                <input asp-for="NombreUsuario" class="form-control" />
+                <span asp-validation-for="NombreUsuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clave" class="control-label">Clave</label>
+                <input asp-for="Clave" class="form-control" type="password"
+                    placeholder="Dejar vacío si no desea cambiar la clave" />
+                <span asp-validation-for="Clave" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telefono" class="control-label"></label>
+                <input asp-for="Telefono" class="form-control" />
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Direccion" class="control-label"></label>
+                <input asp-for="Direccion" class="form-control" />
+                <span asp-validation-for="Direccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rol" class="control-label"></label>
+                <input asp-for="Rol" class="form-control" />
+                <span asp-validation-for="Rol" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
 </div>

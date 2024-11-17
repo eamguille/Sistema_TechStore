@@ -1,38 +1,48 @@
 @model Techstore_WebApp.Models.DB.Cliente
 
 @{
-    ViewData["Title"] = "Detalles del Cliente";
+    ViewData["Title"] = "Details";
 }
 
-<h1 class="text-center mb-4 text-primary">Detalles del Cliente</h1>
+<h1>Details</h1>
 
-<div class="container">
-    <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white text-center">
-            <h5 class="mb-0">@Model.NombreCliente</h5>
-        </div>
-        <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-4 text-end fw-bold">DUI:</dt>
-                <dd class="col-sm-8">@Model.Dui</dd>
-
-                <dt class="col-sm-4 text-end fw-bold">Teléfono:</dt>
-                <dd class="col-sm-8">@Model.Telefono</dd>
-
-                <dt class="col-sm-4 text-end fw-bold">Email:</dt>
-                <dd class="col-sm-8">@Model.Email</dd>
-
-                <dt class="col-sm-4 text-end fw-bold">Dirección:</dt>
-                <dd class="col-sm-8">@Model.Direccion</dd>
-            </dl>
-        </div>
-        <div class="card-footer bg-light text-center">
-            <a asp-action="Edit" asp-route-id="@Model?.IdCliente" class="btn btn-primary btn-sm me-2">
-                <i class="bi bi-pencil-square"></i> Editar Cliente
-            </a>
-            <a asp-action="Index" class="btn btn-secondary btn-sm">
-                <i class="bi bi-arrow-left"></i> Regresar a Clientes
-            </a>
-        </div>
-    </div>
+<div>
+    <h4>Cliente</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NombreCliente)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NombreCliente)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Dui)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Dui)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Direccion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Direccion)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdCliente">Edit</a> |
+    <a asp-action="Index">Back to List</a>
 </div>
