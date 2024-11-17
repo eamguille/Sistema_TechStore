@@ -1,8 +1,11 @@
 ﻿@using System.Security.Claims;
-@{ var rol = User.FindFirst(ClaimTypes.Role)?.Value; }
+@{
+    var rol = User.FindFirst(ClaimTypes.Role)?.Value;
+}
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,54 +15,85 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Techstore_WebApp.styles.css" asp-append-version="true" />
 </head>
+
 <body>
     <div class="container-fluid d-flex flex-column min-vh-100">
         <div class="row flex-grow-1">
             <div class="col-auto bg-dark d-flex flex-column align-items-start min-vh-100">
-                    <div class="pt-4 pb-1 px-2">
-                        <a class="text-white text-decoration-none" asp-controller="Home" asp-action="Index">
-                            <i class="bi bi-house fs-3 me-2"></i>
-                            <span class="fs-3 d-none d-sm-inline">TechStore</span>
+                <div class="pt-4 pb-1 px-2">
+                    <a class="text-white text-decoration-none" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-house fs-3 me-2"></i>
+                        <span class="fs-3 d-none d-sm-inline">TechStore</span>
+                    </a>
+                </div>
+                <hr class="text-white">
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item my-1">
+                        <a class="nav-link d-flex align-items-center text-white" asp-controller="Productos"
+                            asp-action="Index">
+                            <i class="bi bi-laptop fs-5 me-2"></i>
+                            <span class="d-none d-sm-inline fs-6">Productos</span>
                         </a>
-                    </div>
-                    <hr class="text-white">
-                    <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item my-2 active">
-                            <a class="nav-link" asp-controller="Productos" asp-action="Index">
-                                <i class="bi bi-laptop fs-4 me-2"></i>
-                                <span class="d-none d-sm-inline">Productos</span>
+                    </li>
+                    <li class="nav-item my-1">
+                        <a class="nav-link d-flex align-items-center text-white" asp-controller="Clientes"
+                            asp-action="Index">
+                            <i class="bi bi-people fs-5 me-2"></i>
+                            <span class="d-none d-sm-inline fs-6">Clientes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item my-1">
+                        <a class="nav-link d-flex align-items-center text-white" asp-controller="CategoriasProducto"
+                            asp-action="Index">
+                            <i class="bi bi-bookmark fs-5 me-2"></i>
+                            <span class="d-none d-sm-inline fs-6">Categorias</span>
+                        </a>
+                    </li>
+                    <li class="nav-item my-1">
+                        <a class="nav-link d-flex align-items-center text-white" asp-controller="Proveedores"
+                            asp-action="Index">
+                            <i class="bi bi-plus-square-fill fs-5 me-2"></i>
+                            <span class="d-none d-sm-inline fs-6">Proveedores</span>
+                        </a>
+                    </li>
+                    @if (rol == "root" || rol == "administrador")
+                    {
+                        <li class="nav-item my-1">
+                            <a class="nav-link d-flex align-items-center text-white" asp-controller="Compras"
+                                asp-action="Index">
+                                <i class="bi bi-bag fs-5 me-2"></i>
+                                <span class="d-none d-sm-inline fs-6">Compras de la empresa</span>
                             </a>
                         </li>
-                        <li class="nav-item my-2">
-                            <a class="nav-link" asp-controller="Clientes" asp-action="Index">
-                                <i class="bi bi-people fs-4 me-2"></i>
-                                <span class="d-none d-sm-inline">Clientes</span>
+                        <li class="nav-item my-1">
+                            <a class="nav-link d-flex align-items-center text-white" asp-controller="Ventas"
+                                asp-action="Index">
+                                <i class="bi bi-receipt fs-5 me-2"></i>
+                                <span class="d-none d-sm-inline fs-6">Ventas de la empresa</span>
                             </a>
                         </li>
-                        <li class="nav-item my-2">
-                            <a class="nav-link" asp-controller="CategoriasProducto" asp-action="Index">
-                                <i class="bi bi-bookmark fs-4 me-2"></i>
-                                <span class="d-none d-sm-inline">Categorias</span>
+                        <li class="nav-item my-1">
+                            <a class="nav-link d-flex align-items-center text-white" asp-controller="Usuarios"
+                                asp-action="Index">
+                                <i class="bi bi-person-check fs-5 me-2"></i>
+                                <span class="d-none d-sm-inline fs-6">Usuarios</span>
                             </a>
                         </li>
-                        @if (rol == "root") {
-                            <li class="nav-item my-2">
-                                <a class="nav-link" asp-controller="Usuarios" asp-action="Index">
-                                    <i class="bi bi-person-check fs-4 me-2"></i>
-                                <span class="d-none d-sm-inline">Usuarios</span>
-                                </a>
-                            </li>
-                        }
+                    }
+                </ul>
+                <div class="dropdown">
+                    <a href="#"
+                        class="d-flex align-items-center justify-content-right p-3 link-light text-decoration-none dropdown-toggle text-white"
+                        id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi-person-circle fs-4"></i>
+                    </a>
+                    <ul class="dropdown-menu text-small shadow bg-dark" aria-labelledby="dropdownUser3">
+                        <li><a class="dropdown-item text-white" asp-action="Profile" asp-controller="Account">Mi
+                                Perfil</a></li>
+                        <li><a class="dropdown-item text-white" asp-action="Logout" asp-controller="Account">Cerrar
+                                Sesion</a></li>
                     </ul>
-                    <div class="dropdown">
-                        <a href="#" class="d-flex align-items-center justify-content-right p-3 link-light text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi-person-circle fs-4"></i>
-                        </a>
-                        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
-                            <li><a class="dropdown-item" asp-action="Profile" asp-controller="Account">Mi Perfil</a></li>
-                            <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Cerrar Sesion</a></li>
-                        </ul>
-                    </div>
+                </div>
             </div>
             <div class="col-sm p-3 overflow-auto">
                 <div class="container">
@@ -76,4 +110,5 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>
