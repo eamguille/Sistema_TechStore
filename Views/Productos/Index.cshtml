@@ -4,157 +4,91 @@
     ViewData["Title"] = "Index";
 }
 
-<h2 class="mb-5">Productos</h2>
+<h2 class="mb-5 text-center">Productos</h2>
 
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between flex-wrap mb-3">
     <div>
-        <p>
-            <a asp-action="Create" class="btn btn-success">Crear nuevo producto</a>
-        </p>
+        <a asp-action="Create" class="btn btn-success">Crear nuevo producto</a>
     </div>
-    <div class="w-50">
+    <div class="w-100 w-md-50 mt-2 mt-md-0">
         <input type="text" id="buscador" class="form-control" placeholder="Busca un producto...">
     </div>
 </div>
 
-<table class="table table-striped">
-    <thead class="table-header">
-        <tr class="text-center align-middle">
-            <th>
-                @* @Html.DisplayNameFor(model => model.NombreProducto) *@
-                Nombre Producto
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.DescripcionProducto) *@
-                Descripcion
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.PrecioCompra) *@
-                Precio Compra
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.PrecioVenta) *@
-                Precio Venta
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.CantidadStock) *@
-                Cantidad Stock
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.Estado) *@
-                Estado
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.IdCategoriaProductoNavigation) *@
-                Categoria
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.IdModeloNavigation) *@
-                Modelo
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.IdTipoProductoNavigation) *@
-                Tipo Producto
-            </th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody id="cuerpoTabla">
-        @foreach (var item in Model)
-        {
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="table-light">
             <tr class="text-center align-middle">
-                <td>
-                    @Html.DisplayFor(modelItem => item.NombreProducto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DescripcionProducto)
-                </td>
-                <td>
-                    $@Html.DisplayFor(modelItem => item.PrecioCompra)
-                </td>
-                <td>
-                    $@Html.DisplayFor(modelItem => item.PrecioVenta)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CantidadStock)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estado)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdCategoriaProductoNavigation.Categoria)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdModeloNavigation.Modelo1)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdTipoProductoNavigation.TipoProducto)
-                </td>
-                <td>
-                    <div class="d-flex flex-nowrap">
-                        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.IdProducto" title="Editar"><i
-                                class="bi bi-pencil-square text-white"></i></a>
-                        <a asp-action="Details" class="btn btn-warning mx-2" asp-route-id="@item.IdProducto"
-                            title="Detalles"><i class="bi bi-archive text-white"></i></a>
-                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.IdProducto" title="Eliminar"><i
-                                class="bi bi-trash-fill text-white"></i></a>
-                    </div>
-                </td>
+                <th>Nombre Producto</th>
+                <th class="d-none d-md-table-cell">Descripción</th>
+                <th class="d-none d-lg-table-cell">Precio Compra</th>
+                <th class="d-none d-lg-table-cell">Precio Venta</th>
+                <th class="d-none d-lg-table-cell">Cantidad Stock</th>
+                <th class="d-none d-lg-table-cell">Estado</th>
+                <th class="d-none d-xl-table-cell">Categoría</th>
+                <th class="d-none d-xl-table-cell">Modelo</th>
+                <th class="d-none d-xl-table-cell">Tipo Producto</th>
+                <th>Acciones</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody id="cuerpoTabla">
+            @foreach (var item in Model)
+            {
+                <tr class="text-center align-middle">
+                    <td>@Html.DisplayFor(modelItem => item.NombreProducto)</td>
+                    <td class="d-none d-md-table-cell">@Html.DisplayFor(modelItem => item.DescripcionProducto)</td>
+                    <td class="d-none d-lg-table-cell">$@Html.DisplayFor(modelItem => item.PrecioCompra)</td>
+                    <td class="d-none d-lg-table-cell">$@Html.DisplayFor(modelItem => item.PrecioVenta)</td>
+                    <td class="d-none d-lg-table-cell">@Html.DisplayFor(modelItem => item.CantidadStock)</td>
+                    <td class="d-none d-lg-table-cell">@Html.DisplayFor(modelItem => item.Estado)</td>
+                    <td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem => item.IdCategoriaProductoNavigation.Categoria)</td>
+                    <td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem => item.IdModeloNavigation.Modelo1)</td>
+                    <td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem => item.IdTipoProductoNavigation.TipoProducto)</td>
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <a asp-action="Edit" class="btn btn-primary btn-sm me-2" asp-route-id="@item.IdProducto" title="Editar">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a asp-action="Details" class="btn btn-warning btn-sm me-2" asp-route-id="@item.IdProducto" title="Detalles">
+                                <i class="bi bi-archive"></i>
+                            </a>
+                            <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.IdProducto" title="Eliminar">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="collapse d-md-none" id="details-@item.IdProducto">
+                    <td colspan="2">
+                        <div class="bg-light p-3">
+                            <p><strong>Descripción:</strong> @Html.DisplayFor(modelItem => item.DescripcionProducto)</p>
+                            <p><strong>Precio Compra:</strong> $@Html.DisplayFor(modelItem => item.PrecioCompra)</p>
+                            <p><strong>Precio Venta:</strong> $@Html.DisplayFor(modelItem => item.PrecioVenta)</p>
+                            <p><strong>Cantidad Stock:</strong> @Html.DisplayFor(modelItem => item.CantidadStock)</p>
+                            <p><strong>Estado:</strong> @Html.DisplayFor(modelItem => item.Estado)</p>
+                            <p><strong>Categoría:</strong> @Html.DisplayFor(modelItem => item.IdCategoriaProductoNavigation.Categoria)</p>
+                            <p><strong>Modelo:</strong> @Html.DisplayFor(modelItem => item.IdModeloNavigation.Modelo1)</p>
+                            <p><strong>Tipo Producto:</strong> @Html.DisplayFor(modelItem => item.IdTipoProductoNavigation.TipoProducto)</p>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 <script>
-    document.getElementById('buscador').addEventListener('keyup', async (e) => {
-        const texto = e.target.value.trim();
+    document.querySelectorAll('td:first-child').forEach(td => {
+        td.addEventListener('click', () => {
+            const rowId = `#details-${td.parentElement.querySelector('td').textContent.trim()}`;
+            const currentOpen = document.querySelector('.collapse.show');
 
-        try {
-            // Realizar la búsqueda, incluso si el texto está vacío
-            const response = await fetch(`/Productos/Buscador?texto=${texto}`);
-            if (!response.ok) {
-                throw new Error('Error al buscar el producto');
-            }
+                if (currentOpen && currentOpen.id !== rowId.slice(1)) {
+                currentOpen.classList.remove('show');
+                }
 
-            const productos = await response.json();
-            actualizarTabla(productos);
-        } catch (error) {
-            console.error(error);
-        }
-    });
-
-    function actualizarTabla(productos) {
-        const tabla = document.getElementById('cuerpoTabla');
-        tabla.innerHTML = '';
-
-        if (productos.length === 0) {
-            tabla.innerHTML = '<tr><td colspan="9" class="text-center">No se encontraron productos.</td></tr>';
-            return;
-        }
-
-        productos.forEach(producto => {
-            const fila = document.createElement('tr');
-            fila.classList.add('text-center', 'align-middle');
-
-            fila.innerHTML = `
-                <td>${producto.nombreProducto}</td>
-                <td>${producto.descripcionProducto}</td>
-                <td>$${producto.precioCompra}</td>
-                <td>$${producto.precioVenta}</td>
-                <td>${producto.cantidadStock}</td>
-                <td>${producto.estado}</td>
-                <td>${producto.categoria}</td>
-                <td>${producto.modelo1}</td>
-                <td>${producto.tipoProducto}</td>
-                <td>
-                    <div class="d-flex flex-nowrap">
-                        <a href="/Productos/Edit/${producto.idProducto}" class="btn btn-primary" title="Editar"><i class="bi bi-pencil-square text-white"></i></a>
-                        <a href="/Productos/Details/${producto.idProducto}" class="btn btn-warning mx-2" title="Detalles"><i class="bi bi-archive text-white"></i></a>
-                        <a href="/Productos/Delete/${producto.idProducto}" class="btn btn-danger" title="Eliminar"><i class="bi bi-trash-fill text-white"></i></a>
-                    </div>
-                </td>
-            `;
-            tabla.appendChild(fila);
+                const targetRow = document.querySelector(rowId);
+            targetRow.classList.toggle('show');
+            });
         });
-    }
 </script>

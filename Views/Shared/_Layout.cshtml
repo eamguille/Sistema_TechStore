@@ -92,23 +92,23 @@
                                 Perfil</a></li>
                         <li><a class="dropdown-item text-white" asp-action="Logout" asp-controller="Account">Cerrar
                                 Sesion</a></li>
-                    </ul>
                 </div>
-            </div>
-            <div class="col-sm p-3 overflow-auto">
-                <div class="container">
-                    <main role="main" class="pb-3">
-                        @RenderBody()
-                    </main>
+
+                <!-- Contenido principal -->
+                <div class="col-sm p-3 overflow-auto">
+                    <div class="container">
+                        <main role="main" class="pb-3">
+                            @RenderBody()
+                        </main>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
 </body>
 
 </html>

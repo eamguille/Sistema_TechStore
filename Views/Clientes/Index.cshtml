@@ -4,120 +4,80 @@
     ViewData["Title"] = "Index";
 }
 
-<h2 class="mb-5">Clientes</h2>
+<h2 class="mb-5 text-center">Clientes</h2>
 
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between flex-wrap mb-3">
     <div>
-        <p>
-            <a asp-action="Create" class="btn btn-success">Agregar nuevo cliente</a>
-        </p>
+        <a asp-action="Create" class="btn btn-success">Agregar nuevo cliente</a>
     </div>
-    <div class="w-50">
+    <div class="w-100 w-md-50 mt-2 mt-md-0">
         <input type="text" id="buscador" class="form-control" placeholder="Busca un cliente...">
     </div>
 </div>
 
-<table class="table table-striped">
-    <thead class="table-header">
-        <tr class="text-center align-middle">
-            <th>
-                @Html.DisplayNameFor(model => model.NombreCliente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dui)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Direccion)
-            </th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody id="cuerpoTabla">
-        @foreach (var item in Model)
-        {
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="table-light">
             <tr class="text-center align-middle">
-                <td>
-                    @Html.DisplayFor(modelItem => item.NombreCliente)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Dui)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telefono)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Direccion)
-                </td>
-                <td>
-                    <div class="d-flex flex-nowrap justify-content-center">
-                        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.IdCliente" title="Editar"><i
-                                class="bi bi-pencil-square text-white"></i></a>
-                        <a asp-action="Details" class="btn btn-warning mx-2" asp-route-id="@item.IdCliente"
-                            title="Detalles"><i class="bi bi-archive text-white"></i></a>
-                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.IdCliente" title="Eliminar"><i
-                                class="bi bi-trash-fill text-white"></i></a>
-                    </div>
-                </td>
+                <th>Nombre Cliente</th>
+                <th class="d-none d-md-table-cell">DUI</th>
+                <th class="d-none d-lg-table-cell">Teléfono</th>
+                <th class="d-none d-lg-table-cell">Email</th>
+                <th class="d-none d-xl-table-cell">Dirección</th>
+                <th>Acciones</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody id="cuerpoTabla">
+            @foreach (var item in Model)
+            {
+                <tr class="text-center align-middle">
+                    <td>@Html.DisplayFor(modelItem => item.NombreCliente)</td>
+                    <td class="d-none d-md-table-cell">@Html.DisplayFor(modelItem => item.Dui)</td>
+                    <td class="d-none d-lg-table-cell">@Html.DisplayFor(modelItem => item.Telefono)</td>
+                    <td class="d-none d-lg-table-cell">@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem => item.Direccion)</td>
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <a asp-action="Edit" class="btn btn-primary btn-sm me-2" asp-route-id="@item.IdCliente" title="Editar">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a asp-action="Details" class="btn btn-warning btn-sm me-2" asp-route-id="@item.IdCliente" title="Detalles">
+                                <i class="bi bi-archive"></i>
+                            </a>
+                            <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.IdCliente" title="Eliminar">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="collapse d-md-none" id="details-@item.IdCliente">
+                    <td colspan="2">
+                        <div class="bg-light p-3">
+                            <p><strong>DUI:</strong> @Html.DisplayFor(modelItem => item.Dui)</p>
+                            <p><strong>Teléfono:</strong> @Html.DisplayFor(modelItem => item.Telefono)</p>
+                            <p><strong>Email:</strong> @Html.DisplayFor(modelItem => item.Email)</p>
+                            <p><strong>Dirección:</strong> @Html.DisplayFor(modelItem => item.Direccion)</p>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 <script>
-    document.getElementById('buscador').addEventListener('keyup', async (e) => {
-        const texto = e.target.value.trim();
+    // Mostrar detalles usando Bootstrap Collapse
+    document.querySelectorAll('td:first-child').forEach(td => {
+        td.addEventListener('click', () => {
+            const rowId = `#details-${td.parentElement.querySelector('td').textContent.trim()}`;
+            const currentOpen = document.querySelector('.collapse.show');
 
-        try {
-            // Realizar la búsqueda, incluso si el texto está vacío
-            const response = await fetch(`/Clientes/Buscador?texto=${texto}`);
-            if (!response.ok) {
-                throw new Error('Error al buscar el cliente');
+            if (currentOpen && currentOpen.id !== rowId.slice(1)) {
+                currentOpen.classList.remove('show');
             }
 
-            const clientes = await response.json();
-            actualizarTabla(clientes);
-        } catch (error) {
-            console.error(error);
-        }
-    });
-
-    function actualizarTabla(clientes) {
-        const tabla = document.getElementById('cuerpoTabla');
-        tabla.innerHTML = '';
-
-        if (clientes.length === 0) {
-            tabla.innerHTML = '<tr><td colspan="9" class="text-center">No se encontraron clientes.</td></tr>';
-            return;
-        }
-
-        clientes.forEach(cliente => {
-            const fila = document.createElement('tr');
-            fila.classList.add('text-center', 'align-middle');
-
-            fila.innerHTML = `
-                <td>${cliente.nombreCliente}</td>
-                <td>${cliente.dui}</td>
-                <td>$${cliente.telefono}</td>
-                <td>$${cliente.email}</td>
-                <td>${cliente.direccion}</td>
-                <td>
-                    <div class="d-flex flex-nowrap">
-                        <a href="/Clientes/Edit/${cliente.idCliente}" class="btn btn-primary" title="Editar"><i class="bi bi-pencil-square text-white"></i></a>
-                        <a href="/Clientes/Details/${cliente.idCliente}" class="btn btn-warning mx-2" title="Detalles"><i class="bi bi-archive text-white"></i></a>
-                        <a href="/Clientes/Delete/${cliente.idCliente}" class="btn btn-danger" title="Eliminar"><i class="bi bi-trash-fill text-white"></i></a>
-                    </div>
-                </td>
-            `;
-            tabla.appendChild(fila);
+            const targetRow = document.querySelector(rowId);
+            targetRow.classList.toggle('show');
         });
-    }
+    });
 </script>
