@@ -267,3 +267,8 @@ UPDATE Productos SET id_producto = 'PROD00003' WHERE id_producto = 'PROD0000';
 
 INSERT INTO Detalles_Ventas
 VALUES ('DV00003',2,'P00002',10,24);
+
+SELECT * FROM "Compras_Empresa"
+
+INSERT INTO Proveedores
+VALUES ('Juan Perez', '94544551-0', '7234-0505', 'juan.perez@empresa.com', 'Mejicanos')

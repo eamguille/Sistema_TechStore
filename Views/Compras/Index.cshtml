@@ -1,0 +1,125 @@
+@model IEnumerable<Techstore_WebApp.Models.DB.ComprasEmpresa>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2 class="mb-5">Compras de la empresa</h2>
+
+<div class="d-flex justify-content-between">
+    <div>
+        <p>
+            <a asp-action="Create" class="btn btn-success">Agregar nueva compra</a>
+        </p>
+    </div>
+    <div class="w-50">
+        <input type="text" id="buscador" class="form-control" placeholder="Busca un registro de venta...">
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr class="text-center">
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCompra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalCompra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoCompra)
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.IdProveedorNavigation) *@
+                Proveedor
+            </th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.IdUsuarioNavigation) *@
+                Usuario
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody id="cuerpoTabla">
+        @foreach (var item in Model)
+        {
+            <tr class="text-center">
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaCompra)
+                </td>
+                <td>
+                    $@Html.DisplayFor(modelItem => item.TotalCompra)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EstadoCompra)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdProveedorNavigation.NombreProveedor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.NombreUsuario)
+                </td>
+                <td>
+                    <div class="d-flex flex-nowrap justify-content-center">
+                        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.IdCompra" title="Editar"><i
+                                class="bi bi-pencil-square text-white"></i></a>
+                        <a asp-action="Details" class="btn btn-warning mx-2" asp-route-id="@item.IdCompra"
+                            title="Detalles"><i class="bi bi-archive text-white"></i></a>
+                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.IdCompra" title="Eliminar"><i
+                                class="bi bi-trash-fill text-white"></i></a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    document.getElementById('buscador').addEventListener('keyup', async (e) => {
+        const texto = e.target.value.trim();
+
+        try {
+            // Realizar la búsqueda, incluso si el texto está vacío
+            const response = await fetch(`/Compras/Buscador?texto=${texto}`);
+            if (!response.ok) {
+                throw new Error('Error al buscar el registro de compra');
+            }
+
+            const compras = await response.json();
+            actualizarTabla(compras);
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+    function actualizarTabla(compras) {
+        const tabla = document.getElementById('cuerpoTabla');
+        tabla.innerHTML = '';
+
+        if (compras.length === 0) {
+            tabla.innerHTML = '<tr><td colspan="9" class="text-center">No se encontraron registros de compras.</td></tr>';
+            return;
+        }
+
+        compras.forEach(compra => {
+            const fila = document.createElement('tr');
+            fila.classList.add('text-center', 'align-middle');
+
+            fila.innerHTML = `
+                <td>${compra.fechaCompra}</td>
+                <td>${compra.totalCompra}</td>
+                <td>${compra.estadoVenta}</td>
+                <td>${compra.nombreProveedor}</td>
+                <td>${compra.nombreUsuario}</td>
+                <td>
+                    <div class="d-flex flex-nowrap justify-content-center">
+                        <a href="/Compras/Edit/${compra.idCompra}" class="btn btn-primary" title="Editar"><i class="bi bi-pencil-square text-white"></i></a>
+                        <a href="/Compras/Details/${compra.idCompra}" class="btn btn-warning mx-2" title="Detalles"><i class="bi bi-archive text-white"></i></a>
+                        <a href="/Compras/Delete/${compra.idCompra}" class="btn btn-danger" title="Eliminar"><i class="bi bi-trash-fill text-white"></i></a>
+                    </div>
+                </td>
+            `;
+            tabla.appendChild(fila);
+        });
+    }
+</script>

@@ -1,0 +1,123 @@
+@model IEnumerable<Techstore_WebApp.Models.DB.Proveedore>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2 class="mb-5">Proveedores</h2>
+
+<div class="d-flex justify-content-between">
+    <div>
+        <p>
+            <a asp-action="Create" class="btn btn-success">Agregar nuevo proveedor</a>
+        </p>
+    </div>
+    <div class="w-50">
+        <input type="text" id="buscador" class="form-control" placeholder="Busca un proveedor...">
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr class="text-center">
+            <th>
+                @Html.DisplayNameFor(model => model.NombreProveedor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dui)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Direccion)
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody id="cuerpoTabla">
+        @foreach (var item in Model)
+        {
+            <tr class="text-center">
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreProveedor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dui)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Direccion)
+                </td>
+                <td>
+                    <div class="d-flex flex-nowrap justify-content-center">
+                        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.IdProveedor" title="Editar"><i
+                                class="bi bi-pencil-square text-white"></i></a>
+                        <a asp-action="Details" class="btn btn-warning mx-2" asp-route-id="@item.IdProveedor"
+                            title="Detalles"><i class="bi bi-archive text-white"></i></a>
+                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.IdProveedor" title="Eliminar"><i
+                                class="bi bi-trash-fill text-white"></i></a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    document.getElementById('buscador').addEventListener('keyup', async (e) => {
+        const texto = e.target.value.trim();
+
+        try {
+            // Realizar la búsqueda, incluso si el texto está vacío
+            const response = await fetch(`/Proveedores/Buscador?texto=${texto}`);
+            if (!response.ok) {
+                throw new Error('Error al buscar el proveedor');
+            }
+
+            const proveedores = await response.json();
+            actualizarTabla(proveedores);
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+    function actualizarTabla(proveedores) {
+        const tabla = document.getElementById('cuerpoTabla');
+        tabla.innerHTML = '';
+
+        if (proveedores.length === 0) {
+            tabla.innerHTML = '<tr><td colspan="9" class="text-center">No se encontraron proveedores.</td></tr>';
+            return;
+        }
+
+        proveedores.forEach(proveedor => {
+            const fila = document.createElement('tr');
+            fila.classList.add('text-center', 'align-middle');
+
+            fila.innerHTML = `
+                <td>${proveedor.nombreProveedor}</td>
+                <td>$${proveedor.dui}</td>
+                <td>${proveedor.telefono}</td>
+                <td>${proveedor.email}</td>
+                <td>${proveedor.direccion}</td>
+                <td>
+                    <div class="d-flex flex-nowrap justify-content-center">
+                        <a href="/Proveedores/Edit/${proveedor.idProveedor}" class="btn btn-primary" title="Editar"><i class="bi bi-pencil-square text-white"></i></a>
+                        <a href="/Proveedores/Details/${proveedor.idProveedor}" class="btn btn-warning mx-2" title="Detalles"><i class="bi bi-archive text-white"></i></a>
+                        <a href="/Proveedores/Delete/${proveedor.idProveedor}" class="btn btn-danger" title="Eliminar"><i class="bi bi-trash-fill text-white"></i></a>
+                    </div>
+                </td>
+            `;
+            tabla.appendChild(fila);
+        });
+    }
+</script>
