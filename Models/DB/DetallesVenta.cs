@@ -9,7 +9,7 @@ public partial class DetallesVenta
 
     public int IdVenta { get; set; }
 
-    public string IdProducto { get; set; } = null!; // Mantenido como string
+    public string IdProducto { get; set; } = null!;
 
     public int Cantidad { get; set; }
 

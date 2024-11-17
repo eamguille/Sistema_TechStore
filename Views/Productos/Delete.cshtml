@@ -1,51 +1,75 @@
 @model Techstore_WebApp.Models.DB.Producto
 
 @{
-    ViewData["Title"] = "Eliminar Producto";
+    ViewData["Title"] = "Delete";
 }
 
-<h1 class="text-center mb-4">Eliminar Producto</h1>
+<h1>Delete</h1>
 
-<div class="container">
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <h5 class="card-title text-center text-danger">¿Está seguro de que desea eliminar este producto?</h5>
-            <hr />
-            <dl class="row">
-                <dt class="col-sm-4 text-end fw-bold">Nombre del Producto:</dt>
-                <dd class="col-sm-8">@Model.NombreProducto</dd>
-
-                <dt class="col-sm-4 text-end fw-bold">Descripción:</dt>
-                <dd class="col-sm-8">@Model.DescripcionProducto</dd>
-
-                <dt class="col-sm-4 text-end fw-bold">Precio de Compra:</dt>
-                <dd class="col-sm-8">$@Model.PrecioCompra</dd>
-
-                <dt class="col-sm-4 text-end fw-bold">Precio de Venta:</dt>
-                <dd class="col-sm-8">$@Model.PrecioVenta</dd>
-
-                <dt class="col-sm-4 text-end fw-bold">Cantidad en Stock:</dt>
-                <dd class="col-sm-8">@Model.CantidadStock</dd>
-
-                <dt class="col-sm-4 text-end fw-bold">Estado:</dt>
-                <dd class="col-sm-8">@Model.Estado</dd>
-
-                <dt class="col-sm-4 text-end fw-bold">Categoría:</dt>
-                <dd class="col-sm-8">@Model.IdCategoriaProductoNavigation?.Categoria</dd>
-
-                <dt class="col-sm-4 text-end fw-bold">Modelo:</dt>
-                <dd class="col-sm-8">@Model.IdModeloNavigation?.Modelo1</dd>
-
-                <dt class="col-sm-4 text-end fw-bold">Tipo de Producto:</dt>
-                <dd class="col-sm-8">@Model.IdTipoProductoNavigation?.TipoProducto</dd>
-            </dl>
-        </div>
-        <div class="card-footer bg-light text-center">
-            <form asp-action="Delete" class="d-inline">
-                <input type="hidden" asp-for="IdProducto" />
-                <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Eliminar</button>
-            </form>
-            <a asp-action="Index" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Volver a la lista</a>
-        </div>
-    </div>
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Producto</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NombreProducto)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NombreProducto)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DescripcionProducto)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DescripcionProducto)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PrecioCompra)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PrecioCompra)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PrecioVenta)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PrecioVenta)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CantidadStock)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CantidadStock)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdCategoriaProductoNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdCategoriaProductoNavigation.IdCategoriaProducto)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdModeloNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdModeloNavigation.IdModelo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdTipoProductoNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdTipoProductoNavigation.IdTipoProducto)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdProducto" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
 </div>
