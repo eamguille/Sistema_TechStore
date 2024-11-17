@@ -58,37 +58,64 @@
                         </div>
                     </td>
                 </tr>
-                <tr class="collapse d-md-none" id="details-@item.IdProducto">
-                    <td colspan="2">
-                        <div class="bg-light p-3">
-                            <p><strong>Descripción:</strong> @Html.DisplayFor(modelItem => item.DescripcionProducto)</p>
-                            <p><strong>Precio Compra:</strong> $@Html.DisplayFor(modelItem => item.PrecioCompra)</p>
-                            <p><strong>Precio Venta:</strong> $@Html.DisplayFor(modelItem => item.PrecioVenta)</p>
-                            <p><strong>Cantidad Stock:</strong> @Html.DisplayFor(modelItem => item.CantidadStock)</p>
-                            <p><strong>Estado:</strong> @Html.DisplayFor(modelItem => item.Estado)</p>
-                            <p><strong>Categoría:</strong> @Html.DisplayFor(modelItem => item.IdCategoriaProductoNavigation.Categoria)</p>
-                            <p><strong>Modelo:</strong> @Html.DisplayFor(modelItem => item.IdModeloNavigation.Modelo1)</p>
-                            <p><strong>Tipo Producto:</strong> @Html.DisplayFor(modelItem => item.IdTipoProductoNavigation.TipoProducto)</p>
-                        </div>
-                    </td>
-                </tr>
             }
         </tbody>
     </table>
 </div>
 
-<script>
-    document.querySelectorAll('td:first-child').forEach(td => {
-        td.addEventListener('click', () => {
-            const rowId = `#details-${td.parentElement.querySelector('td').textContent.trim()}`;
-            const currentOpen = document.querySelector('.collapse.show');
+@section Scripts {
+    <script>
+        const buscador = document.getElementById('buscador');
+        buscador.addEventListener('input', function () {
+            const texto = this.value.trim();
 
-                if (currentOpen && currentOpen.id !== rowId.slice(1)) {
-                currentOpen.classList.remove('show');
-                }
+            if (texto === '') {
+                location.reload(); // Recarga la página para mostrar todos los productos
+                return;
+            }
 
-                const targetRow = document.querySelector(rowId);
-            targetRow.classList.toggle('show');
-            });
+            fetch(`/Productos/Buscador?texto=${encodeURIComponent(texto)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const cuerpoTabla = document.getElementById('cuerpoTabla');
+                    cuerpoTabla.innerHTML = ''; // Limpia los resultados actuales
+
+                    if (data.length === 0) {
+                        cuerpoTabla.innerHTML = `<tr><td colspan="10" class="text-center">No se encontraron productos</td></tr>`;
+                        return;
+                    }
+
+                    data.forEach(producto => {
+                        const row = `
+                                    <tr class="text-center align-middle">
+                                        <td>${producto.nombreProducto}</td>
+                                        <td class="d-none d-md-table-cell">${producto.descripcionProducto}</td>
+                                        <td class="d-none d-lg-table-cell">$${producto.precioCompra}</td>
+                                        <td class="d-none d-lg-table-cell">$${producto.precioVenta}</td>
+                                        <td class="d-none d-lg-table-cell">${producto.cantidadStock}</td>
+                                        <td class="d-none d-lg-table-cell">${producto.estado}</td>
+                                        <td class="d-none d-xl-table-cell">${producto.categoria || ''}</td>
+                                        <td class="d-none d-xl-table-cell">${producto.modelo1 || ''}</td>
+                                        <td class="d-none d-xl-table-cell">${producto.tipoProducto || ''}</td>
+                                        <td>
+                                            <div class="d-flex justify-content-center">
+                                                <a href="/Productos/Edit/${producto.idProducto}" class="btn btn-primary btn-sm me-2" title="Editar">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                                <a href="/Productos/Details/${producto.idProducto}" class="btn btn-warning btn-sm me-2" title="Detalles">
+                                                    <i class="bi bi-archive"></i>
+                                                </a>
+                                                <a href="/Productos/Delete/${producto.idProducto}" class="btn btn-danger btn-sm" title="Eliminar">
+                                                    <i class="bi bi-trash-fill"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `;
+                        cuerpoTabla.innerHTML += row;
+                    });
+                })
+                .catch(error => console.error('Error en la búsqueda:', error));
         });
-</script>
+    </script>
+}

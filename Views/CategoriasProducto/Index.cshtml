@@ -18,7 +18,7 @@
 </div>
 
 <table class="table table-striped">
-    <thead class="table-header">
+    <thead class="table-light">
         <tr class="text-center align-middle">
             <th>
                 @Html.DisplayNameFor(model => model.Categoria)
@@ -36,11 +36,11 @@
                 <td>
                     <div class="d-flex flex-nowrap justify-content-center">
                         <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.IdCategoriaProducto"
-                            title="Editar"><i class="bi bi-pencil-square text-white"></i></a>
+                           title="Editar"><i class="bi bi-pencil-square text-white"></i></a>
                         <a asp-action="Details" class="btn btn-warning mx-2" asp-route-id="@item.IdCategoriaProducto"
-                            title="Detalles"><i class="bi bi-archive text-white"></i></a>
+                           title="Detalles"><i class="bi bi-archive text-white"></i></a>
                         <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.IdCategoriaProducto"
-                            title="Eliminar"><i class="bi bi-trash-fill text-white"></i></a>
+                           title="Eliminar"><i class="bi bi-trash-fill text-white"></i></a>
                     </div>
                 </td>
             </tr>
@@ -48,48 +48,49 @@
     </tbody>
 </table>
 
-<script>
-    document.getElementById('buscador').addEventListener('keyup', async (e) => {
-        const texto = e.target.value.trim();
+@section Scripts {
+    <script>
+        document.getElementById('buscador').addEventListener('keyup', async (e) => {
+            const texto = e.target.value.trim();
 
-        try {
-            // Realizar la búsqueda, incluso si el texto está vacío
-            const response = await fetch(`/CategoriasProducto/Buscador?texto=${texto}`);
-            if (!response.ok) {
-                throw new Error('Error al buscar el categoria');
+            try {
+                const response = await fetch(`/CategoriasProducto/Buscador?texto=${texto}`);
+                if (!response.ok) {
+                    throw new Error('Error al buscar la categoria');
+                }
+
+                const categorias = await response.json();
+                actualizarTabla(categorias);
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+        function actualizarTabla(categorias) {
+            const tabla = document.getElementById('cuerpoTabla');
+            tabla.innerHTML = '';
+
+            if (categorias.length === 0) {
+                tabla.innerHTML = '<tr><td colspan="2" class="text-center">No se encontraron categorias.</td></tr>';
+                return;
             }
 
-            const categorias = await response.json();
-            actualizarTabla(categorias);
-        } catch (error) {
-            console.error(error);
+            categorias.forEach(categoria => {
+                const fila = document.createElement('tr');
+                fila.classList.add('text-center', 'align-middle');
+
+                fila.innerHTML = `
+                            <td>${categoria.categoria}</td>
+                            <td>
+                                <div class="d-flex flex-nowrap justify-content-center">
+                                    <a href="/CategoriasProducto/Edit/${categoria.idCategoriaProducto}" class="btn btn-primary" title="Editar"><i class="bi bi-pencil-square text-white"></i></a>
+                                    <a href="/CategoriasProducto/Details/${categoria.idCategoriaProducto}" class="btn btn-warning mx-2" title="Detalles"><i class="bi bi-archive text-white"></i></a>
+                                    <a href="/CategoriasProducto/Delete/${categoria.idCategoriaProducto}" class="btn btn-danger" title="Eliminar"><i class="bi bi-trash-fill text-white"></i></a>
+                                </div>
+                            </td>
+                        `;
+                tabla.appendChild(fila);
+            });
         }
-    });
-
-    function actualizarTabla(categorias) {
-        const tabla = document.getElementById('cuerpoTabla');
-        tabla.innerHTML = '';
-
-        if (categorias.length === 0) {
-            tabla.innerHTML = '<tr><td colspan="9" class="text-center">No se encontraron categorias.</td></tr>';
-            return;
-        }
-
-        categorias.forEach(categoria => {
-            const fila = document.createElement('tr');
-            fila.classList.add('text-center', 'align-middle');
-
-            fila.innerHTML = `
-                <td>${categoria.categoria}</td>
-                <td>
-                    <div class="d-flex flex-nowrap justify-content-center">
-                        <a href="/CategoriasProducto/Edit/${categoria.idCategoria}" class="btn btn-primary" title="Editar"><i class="bi bi-pencil-square text-white"></i></a>
-                        <a href="/CategoriasProducto/Details/${categoria.idCategoria}" class="btn btn-warning mx-2" title="Detalles"><i class="bi bi-archive text-white"></i></a>
-                        <a href="/CategoriasProducto/Delete/${categoria.idCategoria}" class="btn btn-danger" title="Eliminar"><i class="bi bi-trash-fill text-white"></i></a>
-                    </div>
-                </td>
-            `;
-            tabla.appendChild(fila);
-        });
-    }
-</script>
+    </script>
+}

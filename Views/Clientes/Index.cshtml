@@ -50,34 +50,64 @@
                         </div>
                     </td>
                 </tr>
-                <tr class="collapse d-md-none" id="details-@item.IdCliente">
-                    <td colspan="2">
-                        <div class="bg-light p-3">
-                            <p><strong>DUI:</strong> @Html.DisplayFor(modelItem => item.Dui)</p>
-                            <p><strong>Teléfono:</strong> @Html.DisplayFor(modelItem => item.Telefono)</p>
-                            <p><strong>Email:</strong> @Html.DisplayFor(modelItem => item.Email)</p>
-                            <p><strong>Dirección:</strong> @Html.DisplayFor(modelItem => item.Direccion)</p>
-                        </div>
-                    </td>
-                </tr>
             }
         </tbody>
     </table>
 </div>
 
-<script>
-    // Mostrar detalles usando Bootstrap Collapse
-    document.querySelectorAll('td:first-child').forEach(td => {
-        td.addEventListener('click', () => {
-            const rowId = `#details-${td.parentElement.querySelector('td').textContent.trim()}`;
-            const currentOpen = document.querySelector('.collapse.show');
+@section Scripts {
+    <script>
+        document.getElementById('buscador').addEventListener('keyup', async (e) => {
+            const texto = e.target.value.trim();
 
-            if (currentOpen && currentOpen.id !== rowId.slice(1)) {
-                currentOpen.classList.remove('show');
+            try {
+                const response = await fetch(`/Clientes/Buscador?texto=${encodeURIComponent(texto)}`);
+                if (!response.ok) {
+                    throw new Error('Error al buscar el cliente');
+                }
+
+                const clientes = await response.json();
+                actualizarTabla(clientes);
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+        function actualizarTabla(clientes) {
+            const tabla = document.getElementById('cuerpoTabla');
+            tabla.innerHTML = '';
+
+            if (clientes.length === 0) {
+                tabla.innerHTML = '<tr><td colspan="6" class="text-center">No se encontraron clientes.</td></tr>';
+                return;
             }
 
-            const targetRow = document.querySelector(rowId);
-            targetRow.classList.toggle('show');
-        });
-    });
-</script>
+            clientes.forEach(cliente => {
+                const fila = document.createElement('tr');
+                fila.classList.add('text-center', 'align-middle');
+
+                fila.innerHTML = `
+                            <td>${cliente.nombreCliente}</td>
+                            <td class="d-none d-md-table-cell">${cliente.dui}</td>
+                            <td class="d-none d-lg-table-cell">${cliente.telefono}</td>
+                            <td class="d-none d-lg-table-cell">${cliente.email}</td>
+                            <td class="d-none d-xl-table-cell">${cliente.direccion}</td>
+                            <td>
+                                <div class="d-flex justify-content-center">
+                                    <a href="/Clientes/Edit/${cliente.idCliente}" class="btn btn-primary btn-sm me-2" title="Editar">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a href="/Clientes/Details/${cliente.idCliente}" class="btn btn-warning btn-sm me-2" title="Detalles">
+                                        <i class="bi bi-archive"></i>
+                                    </a>
+                                    <a href="/Clientes/Delete/${cliente.idCliente}" class="btn btn-danger btn-sm" title="Eliminar">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        `;
+                tabla.appendChild(fila);
+            });
+        }
+    </script>
+}

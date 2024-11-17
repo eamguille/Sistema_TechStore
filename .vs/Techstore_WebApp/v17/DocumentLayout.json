@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|solutionrelative:views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,14 +23,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAEUAAAAAAAAAAAAowL4AAAAAAAAAAAAAAA==",
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\Login.cshtml",
+              "ToolTip": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Account\\Login.cshtml",
+              "RelativeToolTip": "Views\\Account\\Login.cshtml",
+              "ViewState": "AgIAABoAAAAAAAAAAAAowCEAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-17T08:33:01.034Z",
+              "WhenOpened": "2024-11-17T21:44:43.945Z",
               "EditorCaption": ""
             }
           ]

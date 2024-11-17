@@ -11,64 +11,80 @@
         <div class="card-body">
             <h5 class="card-title text-center text-uppercase text-primary mb-4">Registro de Nuevo Producto</h5>
             <hr />
-            <form asp-action="Create">
+            <form asp-action="Create" id="formProducto">
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                 <div class="mb-3">
                     <label asp-for="NombreProducto" class="form-label fw-bold">Nombre del Producto</label>
-                    <input asp-for="NombreProducto" class="form-control" />
+                    <input asp-for="NombreProducto" class="form-control" required />
                     <span asp-validation-for="NombreProducto" class="text-danger"></span>
+                    <small class="text-danger d-none" id="errorNombreProducto">Este campo es obligatorio.</small>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="DescripcionProducto" class="form-label fw-bold">Descripción</label>
-                    <input asp-for="DescripcionProducto" class="form-control" />
+                    <input asp-for="DescripcionProducto" class="form-control" required />
                     <span asp-validation-for="DescripcionProducto" class="text-danger"></span>
+                    <small class="text-danger d-none" id="errorDescripcionProducto">Este campo es obligatorio.</small>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="IdCategoriaProducto" class="form-label fw-bold">Categoría</label>
-                    <select asp-for="IdCategoriaProducto" class="form-select" asp-items="ViewBag.IdCategoriaProducto"></select>
+                    <select asp-for="IdCategoriaProducto" class="form-select" asp-items="ViewBag.IdCategoriaProducto" required>
+                        <option value="">Seleccione una categoría</option>
+                    </select>
                     <span asp-validation-for="IdCategoriaProducto" class="text-danger"></span>
+                    <small class="text-danger d-none" id="errorIdCategoriaProducto">Debe seleccionar una categoría.</small>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="IdTipoProducto" class="form-label fw-bold">Tipo de Producto</label>
-                    <select asp-for="IdTipoProducto" class="form-select" asp-items="ViewBag.IdTipoProducto"></select>
+                    <select asp-for="IdTipoProducto" class="form-select" asp-items="ViewBag.IdTipoProducto" required>
+                        <option value="">Seleccione un tipo de producto</option>
+                    </select>
                     <span asp-validation-for="IdTipoProducto" class="text-danger"></span>
+                    <small class="text-danger d-none" id="errorIdTipoProducto">Debe seleccionar un tipo de producto.</small>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="IdModelo" class="form-label fw-bold">Modelo</label>
-                    <select asp-for="IdModelo" class="form-select" asp-items="ViewBag.IdModelo"></select>
+                    <select asp-for="IdModelo" class="form-select" asp-items="ViewBag.IdModelo" required>
+                        <option value="">Seleccione un modelo</option>
+                    </select>
                     <span asp-validation-for="IdModelo" class="text-danger"></span>
+                    <small class="text-danger d-none" id="errorIdModelo">Debe seleccionar un modelo.</small>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="PrecioCompra" class="form-label fw-bold">Precio de Compra</label>
-                    <input asp-for="PrecioCompra" class="form-control" type="number" step="0.01" />
+                    <input asp-for="PrecioCompra" class="form-control" type="number" step="0.01" min="0" required />
                     <span asp-validation-for="PrecioCompra" class="text-danger"></span>
+                    <small class="text-danger d-none" id="errorPrecioCompra">Debe ingresar un precio de compra válido.</small>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="PrecioVenta" class="form-label fw-bold">Precio de Venta</label>
-                    <input asp-for="PrecioVenta" class="form-control" type="number" step="0.01" />
+                    <input asp-for="PrecioVenta" class="form-control" type="number" step="0.01" min="0" required />
                     <span asp-validation-for="PrecioVenta" class="text-danger"></span>
+                    <small class="text-danger d-none" id="errorPrecioVenta">Debe ingresar un precio de venta válido.</small>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="CantidadStock" class="form-label fw-bold">Cantidad en Stock</label>
-                    <input asp-for="CantidadStock" class="form-control" type="number" />
+                    <input asp-for="CantidadStock" class="form-control" type="number" min="0" required />
                     <span asp-validation-for="CantidadStock" class="text-danger"></span>
+                    <small class="text-danger d-none" id="errorCantidadStock">Debe ingresar una cantidad válida.</small>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Estado" class="form-label fw-bold">Estado</label>
-                    <select asp-for="Estado" class="form-select">
+                    <select asp-for="Estado" class="form-select" required>
+                        <option value="">Seleccione un estado</option>
                         <option value="Disponible">Disponible</option>
                         <option value="No Disponible">No Disponible</option>
                     </select>
                     <span asp-validation-for="Estado" class="text-danger"></span>
+                    <small class="text-danger d-none" id="errorEstado">Debe seleccionar un estado.</small>
                 </div>
 
                 <div class="d-grid">
@@ -83,3 +99,40 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.getElementById('formProducto').addEventListener('submit', function (event) {
+            let valido = true;
+
+            // Validar campos individuales
+            const campos = [
+                { id: 'NombreProducto', errorId: 'errorNombreProducto' },
+                { id: 'DescripcionProducto', errorId: 'errorDescripcionProducto' },
+                { id: 'IdCategoriaProducto', errorId: 'errorIdCategoriaProducto' },
+                { id: 'IdTipoProducto', errorId: 'errorIdTipoProducto' },
+                { id: 'IdModelo', errorId: 'errorIdModelo' },
+                { id: 'PrecioCompra', errorId: 'errorPrecioCompra' },
+                { id: 'PrecioVenta', errorId: 'errorPrecioVenta' },
+                { id: 'CantidadStock', errorId: 'errorCantidadStock' },
+                { id: 'Estado', errorId: 'errorEstado' }
+            ];
+
+            for (const campo of campos) {
+                const input = document.querySelector(`[name="${campo.id}"]`);
+                const error = document.getElementById(campo.errorId);
+
+                if (!input.value.trim()) {
+                    error.classList.remove('d-none');
+                    valido = false;
+                } else {
+                    error.classList.add('d-none');
+                }
+            }
+
+            if (!valido) {
+                event.preventDefault();
+            }
+        });
+    </script>
+}

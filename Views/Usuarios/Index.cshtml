@@ -16,64 +16,36 @@
 </div>
 
 <div class="table-responsive">
-    <table class="table table-striped">
-        <thead class="table-header">
-            <tr class="text-center align-middle">
-                <th>
-                    @Html.DisplayNameFor(model => model.Nombres)
-                </th>
-                <th class="d-none d-md-table-cell">
-                    @Html.DisplayNameFor(model => model.Apellidos)
-                </th>
-                <th class="d-none d-md-table-cell">
-                    @Html.DisplayNameFor(model => model.NombreUsuario)
-                </th>
-                <th class="d-none d-md-table-cell">
-                    @Html.DisplayNameFor(model => model.Email)
-                </th>
-                <th class="d-none d-md-table-cell">
-                    @Html.DisplayNameFor(model => model.Telefono)
-                </th>
-                <th class="d-none d-md-table-cell">
-                    @Html.DisplayNameFor(model => model.Direccion)
-                </th>
-                <th class="d-none d-md-table-cell">
-                    @Html.DisplayNameFor(model => model.Rol)
-                </th>
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-light">
+            <tr class="text-center">
+                <th>Nombres</th>
+                <th class="d-none d-sm-table-cell">Apellidos</th>
+                <th class="d-none d-md-table-cell">Nombre Usuario</th>
+                <th class="d-none d-lg-table-cell">Email</th>
+                <th class="d-none d-lg-table-cell">Teléfono</th>
+                <th class="d-none d-xl-table-cell">Dirección</th>
+                <th class="d-none d-xl-table-cell">Rol</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody id="cuerpoTabla">
             @foreach (var item in Model)
             {
-                <tr class="text-center align-middle">
+                <tr class="text-center">
+                    <td>@Html.DisplayFor(modelItem => item.Nombres)</td>
+                    <td class="d-none d-sm-table-cell">@Html.DisplayFor(modelItem => item.Apellidos)</td>
+                    <td class="d-none d-md-table-cell">@Html.DisplayFor(modelItem => item.NombreUsuario)</td>
+                    <td class="d-none d-lg-table-cell">@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td class="d-none d-lg-table-cell">@Html.DisplayFor(modelItem => item.Telefono)</td>
+                    <td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem => item.Direccion)</td>
+                    <td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem => item.Rol)</td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Nombres)
-                    </td>
-                    <td class="d-none d-md-table-cell">
-                        @Html.DisplayFor(modelItem => item.Apellidos)
-                    </td>
-                    <td class="d-none d-md-table-cell">
-                        @Html.DisplayFor(modelItem => item.NombreUsuario)
-                    </td>
-                    <td class="d-none d-md-table-cell">
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td class="d-none d-md-table-cell">
-                        @Html.DisplayFor(modelItem => item.Telefono)
-                    </td>
-                    <td class="d-none d-md-table-cell">
-                        @Html.DisplayFor(modelItem => item.Direccion)
-                    </td>
-                    <td class="d-none d-md-table-cell">
-                        @Html.DisplayFor(modelItem => item.Rol)
-                    </td>
-                    <td>
-                        <div class="d-flex justify-content-center">
-                            <a asp-action="Edit" class="btn btn-primary btn-sm me-2" asp-route-id="@item.IdUsuario" title="Editar">
+                        <div class="d-flex justify-content-center gap-2">
+                            <a asp-action="Edit" class="btn btn-primary btn-sm" asp-route-id="@item.IdUsuario" title="Editar">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a asp-action="Details" class="btn btn-warning btn-sm me-2" asp-route-id="@item.IdUsuario" title="Detalles">
+                            <a asp-action="Details" class="btn btn-warning btn-sm" asp-route-id="@item.IdUsuario" title="Detalles">
                                 <i class="bi bi-archive"></i>
                             </a>
                             <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.IdUsuario" title="Eliminar">
@@ -87,53 +59,55 @@
     </table>
 </div>
 
-<script>
-    document.getElementById('buscador').addEventListener('keyup', async (e) => {
-        const texto = e.target.value.trim();
+@section Scripts {
+    <script>
+        document.getElementById('buscador').addEventListener('keyup', async (e) => {
+            const texto = e.target.value.trim();
 
-        try {
-            const response = await fetch(`/Usuarios/Buscador?texto=${texto}`);
-            if (!response.ok) {
-                throw new Error('Error al buscar el usuario');
+            try {
+                const response = await fetch(`/Usuarios/Buscador?texto=${encodeURIComponent(texto)}`);
+                if (!response.ok) {
+                    throw new Error('Error al buscar el usuario');
+                }
+
+                const usuarios = await response.json();
+                actualizarTabla(usuarios);
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+        function actualizarTabla(usuarios) {
+            const tabla = document.getElementById('cuerpoTabla');
+            tabla.innerHTML = '';
+
+            if (usuarios.length === 0) {
+                tabla.innerHTML = '<tr><td colspan="8" class="text-center">No se encontraron usuarios.</td></tr>';
+                return;
             }
 
-            const usuarios = await response.json();
-            actualizarTabla(usuarios);
-        } catch (error) {
-            console.error(error);
+            usuarios.forEach(usuario => {
+                const fila = document.createElement('tr');
+                fila.classList.add('text-center');
+
+                fila.innerHTML = `
+                            <td>${usuario.nombres}</td>
+                            <td class="d-none d-sm-table-cell">${usuario.apellidos}</td>
+                            <td class="d-none d-md-table-cell">${usuario.nombreUsuario}</td>
+                            <td class="d-none d-lg-table-cell">${usuario.email}</td>
+                            <td class="d-none d-lg-table-cell">${usuario.telefono}</td>
+                            <td class="d-none d-xl-table-cell">${usuario.direccion}</td>
+                            <td class="d-none d-xl-table-cell">${usuario.rol}</td>
+                            <td>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="/Usuarios/Edit/${usuario.idUsuario}" class="btn btn-primary btn-sm" title="Editar"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="/Usuarios/Details/${usuario.idUsuario}" class="btn btn-warning btn-sm" title="Detalles"><i class="bi bi-archive"></i></a>
+                                    <a href="/Usuarios/Delete/${usuario.idUsuario}" class="btn btn-danger btn-sm" title="Eliminar"><i class="bi bi-trash-fill"></i></a>
+                                </div>
+                            </td>
+                        `;
+                tabla.appendChild(fila);
+            });
         }
-    });
-
-    function actualizarTabla(usuarios) {
-        const tabla = document.getElementById('cuerpoTabla');
-        tabla.innerHTML = '';
-
-        if (usuarios.length === 0) {
-            tabla.innerHTML = '<tr><td colspan="8" class="text-center">No se encontraron usuarios.</td></tr>';
-            return;
-        }
-
-        usuarios.forEach(usuario => {
-            const fila = document.createElement('tr');
-            fila.classList.add('text-center', 'align-middle');
-
-            fila.innerHTML = `
-                    <td>${usuario.nombres}</td>
-                    <td class="d-none d-md-table-cell">${usuario.apellidos}</td>
-                    <td class="d-none d-md-table-cell">${usuario.nombreUsuario}</td>
-                    <td class="d-none d-md-table-cell">${usuario.email}</td>
-                    <td class="d-none d-md-table-cell">${usuario.telefono}</td>
-                    <td class="d-none d-md-table-cell">${usuario.direccion}</td>
-                    <td class="d-none d-md-table-cell">${usuario.rol}</td>
-                    <td>
-                        <div class="d-flex justify-content-center">
-                            <a href="/Usuarios/Edit/${usuario.idUsuario}" class="btn btn-primary btn-sm me-2" title="Editar"><i class="bi bi-pencil-square"></i></a>
-                            <a href="/Usuarios/Details/${usuario.idUsuario}" class="btn btn-warning btn-sm me-2" title="Detalles"><i class="bi bi-archive"></i></a>
-                            <a href="/Usuarios/Delete/${usuario.idUsuario}" class="btn btn-danger btn-sm" title="Eliminar"><i class="bi bi-trash-fill"></i></a>
-                        </div>
-                    </td>
-                `;
-            tabla.appendChild(fila);
-        });
-    }
-</script>
+    </script>
+}
