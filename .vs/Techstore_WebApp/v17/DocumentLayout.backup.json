@@ -1,9 +1,13 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore - copia\\",
+  "WorkspaceRootPath": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore - copia\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\models\\db\\producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|solutionrelative:models\\db\\producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|solutionrelative:views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
@@ -23,15 +27,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Login.cshtml",
-              "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore - copia\\Views\\Account\\Login.cshtml",
-              "RelativeDocumentMoniker": "Views\\Account\\Login.cshtml",
-              "ToolTip": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore - copia\\Views\\Account\\Login.cshtml",
-              "RelativeToolTip": "Views\\Account\\Login.cshtml",
-              "ViewState": "AgIAABoAAAAAAAAAAAAowCEAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-17T21:44:43.945Z",
+              "Title": "Producto.cs",
+              "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Models\\DB\\Producto.cs",
+              "RelativeDocumentMoniker": "Models\\DB\\Producto.cs",
+              "ToolTip": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Models\\DB\\Producto.cs",
+              "RelativeToolTip": "Models\\DB\\Producto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-17T22:14:17.544Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\Login.cshtml",
+              "ToolTip": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Account\\Login.cshtml",
+              "RelativeToolTip": "Views\\Account\\Login.cshtml",
+              "ViewState": "AgIAABoAAAAAAAAAAAAowC8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-17T21:44:43.945Z"
             }
           ]
         }

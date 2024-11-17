@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Views",
+    "\\Views\\Account"
   ],
-  "SelectedNode": "\\Techstore_WebApp.sln",
+  "SelectedNode": "\\Views\\Account\\Login.cshtml",
   "PreviewInSolutionExplorer": false
 }
