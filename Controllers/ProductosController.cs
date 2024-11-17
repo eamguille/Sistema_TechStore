@@ -13,24 +13,30 @@ namespace Techstore_WebApp.Controllers
     {
         private readonly DbTechStoreContext _context;
 
+        // Constructor que inicializa el contexto de la base de datos
         public ProductosController(DbTechStoreContext context)
         {
             _context = context;
         }
 
-        // GET: Productos
+        // Acción para listar productos
         public async Task<IActionResult> Index()
         {
-            var dbTechStoreContext = _context.Productos.Include(p => p.IdCategoriaProductoNavigation).Include(p => p.IdModeloNavigation).Include(p => p.IdTipoProductoNavigation);
-            return View(await dbTechStoreContext.ToListAsync());
+            var productos = _context.Productos
+                .Include(p => p.IdCategoriaProductoNavigation)
+                .Include(p => p.IdModeloNavigation)
+                .Include(p => p.IdTipoProductoNavigation);
+
+            return View(await productos.ToListAsync());
         }
 
-        // GET: Productos/Details/5
+        // Acción para ver detalles de un producto
         public async Task<IActionResult> Details(string id)
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(id))
             {
-                return NotFound();
+                ModelState.AddModelError("", "El ID del producto no puede estar vacío.");
+                return NotFound("El ID del producto no puede estar vacío.");
             }
 
             var producto = await _context.Productos
@@ -38,120 +44,142 @@ namespace Techstore_WebApp.Controllers
                 .Include(p => p.IdModeloNavigation)
                 .Include(p => p.IdTipoProductoNavigation)
                 .FirstOrDefaultAsync(m => m.IdProducto == id);
+
             if (producto == null)
             {
-                return NotFound();
+                ModelState.AddModelError("", "El producto solicitado no existe.");
+                return NotFound("El producto solicitado no existe.");
             }
 
             return View(producto);
         }
 
-        // GET: Productos/Create
+        // Acción para mostrar el formulario de creación
         public IActionResult Create()
         {
+            // Cargar listas desplegables desde la base de datos
             ViewData["IdCategoriaProducto"] = new SelectList(_context.CategoriasProductos, "IdCategoriaProducto", "Categoria");
             ViewData["IdModelo"] = new SelectList(_context.Modelos, "IdModelo", "Modelo1");
             ViewData["IdTipoProducto"] = new SelectList(_context.TiposProductos, "IdTipoProducto", "TipoProducto");
             return View();
         }
 
-        // POST: Productos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Acción para manejar la creación de un producto
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdProducto,NombreProducto,DescripcionProducto,IdCategoriaProducto,IdTipoProducto,IdModelo,PrecioCompra,PrecioVenta,CantidadStock,Estado")] Producto producto)
+        public async Task<IActionResult> Create([Bind("NombreProducto,DescripcionProducto,IdCategoriaProducto,IdTipoProducto,IdModelo,PrecioCompra,PrecioVenta,CantidadStock,Estado")] Producto producto)
         {
-            var categoria = await _context.CategoriasProductos.FindAsync(producto.IdCategoriaProducto);
-            var modelo = await _context.Modelos.FindAsync(producto.IdModelo);
-            var tipoProducto = await _context.TiposProductos.FindAsync(producto.IdTipoProducto);
-
-            if (categoria != null && tipoProducto != null && modelo != null)
+            if (ModelState.IsValid)
             {
-                producto.IdProducto = GenerarID();
-                producto.IdCategoriaProductoNavigation = categoria;
-                producto.IdModeloNavigation = modelo;
-                producto.IdTipoProductoNavigation = tipoProducto;
-                _context.Add(producto);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    // Validar relaciones antes de guardar
+                    producto.IdCategoriaProductoNavigation = await _context.CategoriasProductos.FindAsync(producto.IdCategoriaProducto);
+                    producto.IdModeloNavigation = await _context.Modelos.FindAsync(producto.IdModelo);
+                    producto.IdTipoProductoNavigation = await _context.TiposProductos.FindAsync(producto.IdTipoProducto);
+
+                    if (producto.IdCategoriaProductoNavigation == null || producto.IdModeloNavigation == null || producto.IdTipoProductoNavigation == null)
+                    {
+                        ModelState.AddModelError("", "Relaciones inválidas. Verifique las selecciones.");
+                        return View(producto);
+                    }
+
+                    // Generar un IDProducto único (asumiendo que se genera aquí)
+                    producto.IdProducto = Guid.NewGuid().ToString("N").Substring(0, 8); // Genera un string de 8 caracteres
+
+                    _context.Add(producto);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    // Manejar excepciones y mostrar mensaje de error personalizado
+                    ModelState.AddModelError("", $"Error al guardar el producto: {ex.Message}");
+                }
             }
+
+            // Si el modelo no es válido, recargar las listas desplegables
             ViewData["IdCategoriaProducto"] = new SelectList(_context.CategoriasProductos, "IdCategoriaProducto", "Categoria", producto.IdCategoriaProducto);
             ViewData["IdModelo"] = new SelectList(_context.Modelos, "IdModelo", "Modelo1", producto.IdModelo);
             ViewData["IdTipoProducto"] = new SelectList(_context.TiposProductos, "IdTipoProducto", "TipoProducto", producto.IdTipoProducto);
             return View(producto);
         }
 
-        // GET: Productos/Edit/5
+        // Acción para editar un producto
         public async Task<IActionResult> Edit(string id)
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(id))
             {
-                return NotFound();
+                ModelState.AddModelError("", "El ID del producto no puede estar vacío.");
+                return NotFound("El ID del producto no puede estar vacío.");
             }
 
             var producto = await _context.Productos.FindAsync(id);
             if (producto == null)
             {
-                return NotFound();
+                ModelState.AddModelError("", "El producto solicitado no existe.");
+                return NotFound("El producto solicitado no existe.");
             }
+
+            // Cargar listas desplegables con el valor seleccionado
             ViewData["IdCategoriaProducto"] = new SelectList(_context.CategoriasProductos, "IdCategoriaProducto", "Categoria", producto.IdCategoriaProducto);
             ViewData["IdModelo"] = new SelectList(_context.Modelos, "IdModelo", "Modelo1", producto.IdModelo);
             ViewData["IdTipoProducto"] = new SelectList(_context.TiposProductos, "IdTipoProducto", "TipoProducto", producto.IdTipoProducto);
             return View(producto);
         }
 
-        // POST: Productos/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Acción para manejar la edición de un producto
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("IdProducto,NombreProducto,DescripcionProducto,IdCategoriaProducto,IdTipoProducto,IdModelo,PrecioCompra,PrecioVenta,CantidadStock,Estado")] Producto producto)
         {
             if (id != producto.IdProducto)
             {
-                return NotFound();
+                ModelState.AddModelError("", "El ID del producto no coincide con el producto enviado.");
+                return NotFound("El ID del producto no coincide con el producto enviado.");
             }
 
-            var categoria = await _context.CategoriasProductos.FindAsync(producto.IdCategoriaProducto);
-            var modelo = await _context.Modelos.FindAsync(producto.IdModelo);
-            var tipoProducto = await _context.TiposProductos.FindAsync(producto.IdTipoProducto);
-
-            if (categoria != null && tipoProducto != null && modelo != null)
+            if (ModelState.IsValid)
             {
-                producto.IdCategoriaProductoNavigation = categoria;
-                producto.IdModeloNavigation = modelo;
-                producto.IdTipoProductoNavigation = tipoProducto;
                 try
                 {
                     _context.Update(producto);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ProductoExists(producto.IdProducto))
                     {
-                        return NotFound();
+                        ModelState.AddModelError("", "El producto ya no existe.");
+                        return NotFound("El producto ya no existe.");
                     }
                     else
                     {
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                catch (Exception ex)
+                {
+                    // Manejar excepciones y mostrar mensaje de error personalizado
+                    ModelState.AddModelError("", $"Error al editar el producto: {ex.Message}");
+                }
             }
+
+            // Si el modelo no es válido, recargar las listas desplegables
             ViewData["IdCategoriaProducto"] = new SelectList(_context.CategoriasProductos, "IdCategoriaProducto", "Categoria", producto.IdCategoriaProducto);
             ViewData["IdModelo"] = new SelectList(_context.Modelos, "IdModelo", "Modelo1", producto.IdModelo);
             ViewData["IdTipoProducto"] = new SelectList(_context.TiposProductos, "IdTipoProducto", "TipoProducto", producto.IdTipoProducto);
             return View(producto);
         }
 
-        // GET: Productos/Delete/5
+        // Acción para eliminar un producto
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(id))
             {
-                return NotFound();
+                ModelState.AddModelError("", "El ID del producto no puede estar vacío.");
+                return NotFound("El ID del producto no puede estar vacío.");
             }
 
             var producto = await _context.Productos
@@ -159,15 +187,17 @@ namespace Techstore_WebApp.Controllers
                 .Include(p => p.IdModeloNavigation)
                 .Include(p => p.IdTipoProductoNavigation)
                 .FirstOrDefaultAsync(m => m.IdProducto == id);
+
             if (producto == null)
             {
-                return NotFound();
+                ModelState.AddModelError("", "El producto solicitado no existe.");
+                return NotFound("El producto solicitado no existe.");
             }
 
             return View(producto);
         }
 
-        // POST: Productos/Delete/5
+        // Acción para confirmar la eliminación de un producto
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
@@ -175,73 +205,30 @@ namespace Techstore_WebApp.Controllers
             var producto = await _context.Productos.FindAsync(id);
             if (producto != null)
             {
-                _context.Productos.Remove(producto);
+                try
+                {
+                    _context.Productos.Remove(producto);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    // Manejar excepciones y mostrar mensaje de error personalizado
+                    ModelState.AddModelError("", $"Error al eliminar el producto: {ex.Message}");
+                    return RedirectToAction(nameof(Delete), new { id });
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "El producto ya no existe.");
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
+        // Método para verificar si un producto existe
         private bool ProductoExists(string id)
         {
             return _context.Productos.Any(e => e.IdProducto == id);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Buscador(string texto)
-        {
-            var query = _context.Productos
-                .Include(p => p.IdCategoriaProductoNavigation)
-                .Include(p => p.IdModeloNavigation)
-                .Include(p => p.IdTipoProductoNavigation)
-                .AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(texto))
-            {
-                query = query.Where(p => p.NombreProducto.Contains(texto) || p.DescripcionProducto.Contains(texto));
-            }
-
-            var productos = await query.Select(p => new
-            {
-                p.IdProducto,
-                p.NombreProducto,
-                p.DescripcionProducto,
-                p.PrecioCompra,
-                p.PrecioVenta,
-                p.CantidadStock,
-                p.Estado,
-                p.IdModeloNavigation.Modelo1,
-                p.IdTipoProductoNavigation.TipoProducto,
-                p.IdCategoriaProductoNavigation.Categoria
-            }).ToListAsync();
-
-            return Json(productos);
-        }
-
-
-        // Creamos un metodo para asignar un id_producto automaticamente en la base
-        private string GenerarID()
-        {
-            var ultimoProducto = _context.Productos
-            .OrderByDescending(p => p.IdProducto)
-            .FirstOrDefault();
-
-            if (ultimoProducto == null)
-            {
-                return "PROD0001";
-            }
-
-            string ultimoID = ultimoProducto.IdProducto;
-            int numero;
-
-            if (int.TryParse(ultimoID.Substring(4), out numero))
-            {
-                numero++;
-                return $"PROD{numero:D4}";
-            }
-
-            // finalmente si no se pudo convertir devolvemos el id inicial
-            return "PROD0001";
         }
     }
 }

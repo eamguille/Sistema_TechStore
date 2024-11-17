@@ -4,92 +4,94 @@
     ViewData["Title"] = "Index";
 }
 
-<h2 class="mb-5">Usuarios</h2>
+<h2 class="mb-5 text-center">Usuarios</h2>
 
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between flex-wrap mb-3">
     <div>
-        <p>
-            <a asp-action="Create" class="btn btn-success">Agregar nuevo usuario</a>
-        </p>
+        <a asp-action="Create" class="btn btn-success">Agregar nuevo usuario</a>
     </div>
-    <div class="w-50">
+    <div class="w-100 w-md-50 mt-2 mt-md-0">
         <input type="text" id="buscador" class="form-control" placeholder="Busca un usuario...">
     </div>
 </div>
 
-<table class="table table-striped">
-    <thead class="table-header">
-        <tr class="text-center align-middle">
-            <th>
-                @Html.DisplayNameFor(model => model.Nombres)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Apellidos)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreUsuario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Direccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rol)
-            </th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody id="cuerpoTabla">
-        @foreach (var item in Model)
-        {
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="table-header">
             <tr class="text-center align-middle">
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombres)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Apellidos)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NombreUsuario)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telefono)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Direccion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rol)
-                </td>
-                <td>
-                    <div class="d-flex flex-nowrap">
-                        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.IdUsuario" title="Editar"><i
-                                class="bi bi-pencil-square text-white"></i></a>
-                        <a asp-action="Details" class="btn btn-warning mx-2" asp-route-id="@item.IdUsuario"
-                            title="Detalles"><i class="bi bi-archive text-white"></i></a>
-                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.IdUsuario" title="Eliminar"><i
-                                class="bi bi-trash-fill text-white"></i></a>
-                    </div>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombres)
+                </th>
+                <th class="d-none d-md-table-cell">
+                    @Html.DisplayNameFor(model => model.Apellidos)
+                </th>
+                <th class="d-none d-md-table-cell">
+                    @Html.DisplayNameFor(model => model.NombreUsuario)
+                </th>
+                <th class="d-none d-md-table-cell">
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th class="d-none d-md-table-cell">
+                    @Html.DisplayNameFor(model => model.Telefono)
+                </th>
+                <th class="d-none d-md-table-cell">
+                    @Html.DisplayNameFor(model => model.Direccion)
+                </th>
+                <th class="d-none d-md-table-cell">
+                    @Html.DisplayNameFor(model => model.Rol)
+                </th>
+                <th>Acciones</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody id="cuerpoTabla">
+            @foreach (var item in Model)
+            {
+                <tr class="text-center align-middle">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombres)
+                    </td>
+                    <td class="d-none d-md-table-cell">
+                        @Html.DisplayFor(modelItem => item.Apellidos)
+                    </td>
+                    <td class="d-none d-md-table-cell">
+                        @Html.DisplayFor(modelItem => item.NombreUsuario)
+                    </td>
+                    <td class="d-none d-md-table-cell">
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td class="d-none d-md-table-cell">
+                        @Html.DisplayFor(modelItem => item.Telefono)
+                    </td>
+                    <td class="d-none d-md-table-cell">
+                        @Html.DisplayFor(modelItem => item.Direccion)
+                    </td>
+                    <td class="d-none d-md-table-cell">
+                        @Html.DisplayFor(modelItem => item.Rol)
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <a asp-action="Edit" class="btn btn-primary btn-sm me-2" asp-route-id="@item.IdUsuario" title="Editar">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a asp-action="Details" class="btn btn-warning btn-sm me-2" asp-route-id="@item.IdUsuario" title="Detalles">
+                                <i class="bi bi-archive"></i>
+                            </a>
+                            <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.IdUsuario" title="Eliminar">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 <script>
     document.getElementById('buscador').addEventListener('keyup', async (e) => {
         const texto = e.target.value.trim();
 
         try {
-            // Realizar la búsqueda, incluso si el texto está vacío
             const response = await fetch(`/Usuarios/Buscador?texto=${texto}`);
             if (!response.ok) {
                 throw new Error('Error al buscar el usuario');
@@ -107,7 +109,7 @@
         tabla.innerHTML = '';
 
         if (usuarios.length === 0) {
-            tabla.innerHTML = '<tr><td colspan="9" class="text-center">No se encontraron usuarios.</td></tr>';
+            tabla.innerHTML = '<tr><td colspan="8" class="text-center">No se encontraron usuarios.</td></tr>';
             return;
         }
 
@@ -116,21 +118,21 @@
             fila.classList.add('text-center', 'align-middle');
 
             fila.innerHTML = `
-                <td>${usuario.nombres}</td>
-                <td>${usuario.apellidos}</td>
-                <td>${usuario.nombreUsuario}</td>
-                <td>${usuario.email}</td>
-                <td>${usuario.telefono}</td>
-                <td>${usuario.direccion}</td>
-                <td>${usuario.rol}</td>
-                <td>
-                    <div class="d-flex flex-nowrap">
-                        <a href="/Usuarios/Edit/${usuario.idUsuario}" class="btn btn-primary" title="Editar"><i class="bi bi-pencil-square text-white"></i></a>
-                        <a href="/Usuarios/Details/${usuario.idUsuario}" class="btn btn-warning mx-2" title="Detalles"><i class="bi bi-archive text-white"></i></a>
-                        <a href="/Usuarios/Delete/${usuario.idUsuario}" class="btn btn-danger" title="Eliminar"><i class="bi bi-trash-fill text-white"></i></a>
-                    </div>
-                </td>
-            `;
+                    <td>${usuario.nombres}</td>
+                    <td class="d-none d-md-table-cell">${usuario.apellidos}</td>
+                    <td class="d-none d-md-table-cell">${usuario.nombreUsuario}</td>
+                    <td class="d-none d-md-table-cell">${usuario.email}</td>
+                    <td class="d-none d-md-table-cell">${usuario.telefono}</td>
+                    <td class="d-none d-md-table-cell">${usuario.direccion}</td>
+                    <td class="d-none d-md-table-cell">${usuario.rol}</td>
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <a href="/Usuarios/Edit/${usuario.idUsuario}" class="btn btn-primary btn-sm me-2" title="Editar"><i class="bi bi-pencil-square"></i></a>
+                            <a href="/Usuarios/Details/${usuario.idUsuario}" class="btn btn-warning btn-sm me-2" title="Detalles"><i class="bi bi-archive"></i></a>
+                            <a href="/Usuarios/Delete/${usuario.idUsuario}" class="btn btn-danger btn-sm" title="Eliminar"><i class="bi bi-trash-fill"></i></a>
+                        </div>
+                    </td>
+                `;
             tabla.appendChild(fila);
         });
     }

@@ -1,5 +1,7 @@
 ﻿@using System.Security.Claims;
-@{ var rol = User.FindFirst(ClaimTypes.Role)?.Value; }
+@{
+    var rol = User.FindFirst(ClaimTypes.Role)?.Value;
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,52 +17,101 @@
 <body>
     <div class="container-fluid d-flex flex-column min-vh-100">
         <div class="row flex-grow-1">
-            <div class="col-auto bg-dark d-flex flex-column align-items-start min-vh-100">
-                    <div class="pt-4 pb-1 px-2">
-                        <a class="text-white text-decoration-none" asp-controller="Home" asp-action="Index">
-                            <i class="bi bi-house fs-3 me-2"></i>
-                            <span class="fs-3 d-none d-sm-inline">TechStore</span>
+            <!-- Menú lateral para pantallas grandes -->
+            <nav class="col-auto bg-dark d-none d-md-flex flex-column align-items-start min-vh-100">
+                <div class="pt-4 pb-1 px-2">
+                    <a class="text-white text-decoration-none" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-house fs-3 me-2"></i>
+                        <span class="fs-3 d-none d-sm-inline">TechStore</span>
+                    </a>
+                </div>
+                <hr class="text-white">
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item my-2 active">
+                        <a class="nav-link" asp-controller="Productos" asp-action="Index">
+                            <i class="bi bi-laptop fs-4 me-2"></i>
+                            <span class="d-none d-sm-inline">Productos</span>
                         </a>
-                    </div>
-                    <hr class="text-white">
-                    <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item my-2 active">
-                            <a class="nav-link" asp-controller="Productos" asp-action="Index">
-                                <i class="bi bi-laptop fs-4 me-2"></i>
-                                <span class="d-none d-sm-inline">Productos</span>
-                            </a>
-                        </li>
+                    </li>
+                    <li class="nav-item my-2">
+                        <a class="nav-link" asp-controller="Clientes" asp-action="Index">
+                            <i class="bi bi-people fs-4 me-2"></i>
+                            <span class="d-none d-sm-inline">Clientes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item my-2">
+                        <a class="nav-link" asp-controller="CategoriasProducto" asp-action="Index">
+                            <i class="bi bi-bookmark fs-4 me-2"></i>
+                            <span class="d-none d-sm-inline">Categorias</span>
+                        </a>
+                    </li>
+                    @if (rol == "root")
+                    {
                         <li class="nav-item my-2">
-                            <a class="nav-link" asp-controller="Clientes" asp-action="Index">
-                                <i class="bi bi-people fs-4 me-2"></i>
-                                <span class="d-none d-sm-inline">Clientes</span>
-                            </a>
-                        </li>
-                        <li class="nav-item my-2">
-                            <a class="nav-link" asp-controller="CategoriasProducto" asp-action="Index">
-                                <i class="bi bi-bookmark fs-4 me-2"></i>
-                                <span class="d-none d-sm-inline">Categorias</span>
-                            </a>
-                        </li>
-                        @if (rol == "root") {
-                            <li class="nav-item my-2">
-                                <a class="nav-link" asp-controller="Usuarios" asp-action="Index">
-                                    <i class="bi bi-person-check fs-4 me-2"></i>
+                            <a class="nav-link" asp-controller="Usuarios" asp-action="Index">
+                                <i class="bi bi-person-check fs-4 me-2"></i>
                                 <span class="d-none d-sm-inline">Usuarios</span>
-                                </a>
+                            </a>
+                        </li>
+                    }
+                </ul>
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center justify-content-right p-3 link-light text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi-person-circle fs-4"></i>
+                    </a>
+                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
+                        <li><a class="dropdown-item" asp-action="Profile" asp-controller="Account">Mi Perfil</a></li>
+                        <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Cerrar Sesion</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Menú hamburguesa para pantallas pequeñas -->
+            <nav class="navbar navbar-dark bg-dark d-md-none">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <a class="navbar-brand ms-2" asp-controller="Home" asp-action="Index">TechStore</a>
+                </div>
+            </nav>
+
+            <!-- Offcanvas Menu -->
+            <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menú</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-controller="Home" asp-action="Index">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-controller="Productos" asp-action="Index">Productos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-controller="Clientes" asp-action="Index">Clientes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-controller="CategoriasProducto" asp-action="Index">Categorías</a>
+                        </li>
+                        @if (rol == "root")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
                             </li>
                         }
                     </ul>
-                    <div class="dropdown">
-                        <a href="#" class="d-flex align-items-center justify-content-right p-3 link-light text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi-person-circle fs-4"></i>
-                        </a>
-                        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
-                            <li><a class="dropdown-item" asp-action="Profile" asp-controller="Account">Mi Perfil</a></li>
-                            <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Cerrar Sesion</a></li>
-                        </ul>
+                    <hr class="text-white">
+                    <div>
+                        <a class="btn btn-outline-light w-100" asp-action="Profile" asp-controller="Account">Mi Perfil</a>
+                        <a class="btn btn-outline-light w-100 mt-2" asp-action="Logout" asp-controller="Account">Cerrar Sesión</a>
                     </div>
+                </div>
             </div>
+
+            <!-- Contenido principal -->
             <div class="col-sm p-3 overflow-auto">
                 <div class="container">
                     <main role="main" class="pb-3">
