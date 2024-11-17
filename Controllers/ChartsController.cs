@@ -11,13 +11,10 @@ public class ChartsController : Controller
         _context = context;
     }
 
-    // Obtener el total de ventas agrupadas por mes y año
     [HttpGet]
     public async Task<IActionResult> ObtenerVentasPorMes()
     {
-        try
-        {
-            var datos = await _context.VentasEmpresas
+        var datos = await _context.VentasEmpresas
                 .GroupBy(v => new { v.FechaVenta.Year, v.FechaVenta.Month })
                 .Select(g => new
                 {
@@ -28,49 +25,34 @@ public class ChartsController : Controller
                 .OrderBy(d => d.Anio).ThenBy(d => d.Mes)
                 .ToListAsync();
 
-            return Json(datos);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error en ObtenerVentasPorMes: {ex.Message}");
-            return BadRequest(new { Message = "Error al obtener las ventas por mes.", Detalle = ex.Message });
-        }
+        Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(datos));
+        return Json(datos);
     }
 
-    // Obtener los 5 productos más vendidos
     [HttpGet]
     public async Task<IActionResult> Obtener5ProductosMasVendidos()
     {
-        try
+        var productosMasVendidos = await _context.DetallesVentas
+        .Join(_context.Productos,
+              detalle => detalle.IdProducto,
+              producto => producto.IdProducto,
+              (detalle, producto) => new
+              {
+                  producto.NombreProducto,
+                  detalle.Cantidad,
+                  detalle.PrecioUnitario
+              })
+        .GroupBy(x => x.NombreProducto)
+        .Select(g => new
         {
-            var productosMasVendidos = await _context.DetallesVentas
-                .Join(
-                    _context.Productos,
-                    detalle => detalle.IdProducto,     // Clave externa en DetallesVentas
-                    producto => producto.IdProducto,   // Clave primaria en Productos
-                    (detalle, producto) => new         // Resultado de la unión
-                    {
-                        producto.NombreProducto,
-                        detalle.Cantidad,
-                        detalle.PrecioUnitario
-                    })
-                .GroupBy(x => x.NombreProducto)
-                .Select(g => new
-                {
-                    NombreProducto = g.Key,
-                    CantidadTotal = g.Sum(x => x.Cantidad),
-                    PrecioPromedio = g.Average(x => x.PrecioUnitario)
-                })
-                .OrderByDescending(x => x.CantidadTotal)
-                .Take(5)
-                .ToListAsync();
+            NombreProducto = g.Key,
+            CantidadTotal = g.Sum(x => x.Cantidad),
+            PrecioPromedio = g.Average(x => x.PrecioUnitario)
+        })
+        .OrderByDescending(x => x.CantidadTotal)
+        .Take(5)
+        .ToListAsync();
 
-            return Json(productosMasVendidos);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error en Obtener5ProductosMasVendidos: {ex.Message}");
-            return BadRequest(new { Message = "Error al obtener los productos más vendidos.", Detalle = ex.Message });
-        }
+        return Json(productosMasVendidos);
     }
 }

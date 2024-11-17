@@ -2,37 +2,27 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container-fluid mt-4">
-    <h4 class="text-center mb-4">@ViewData["usuario"]</h4>
+<div class="text-left">
+    <h4>@ViewData["usuario"]</h4>
+    @* <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p> *@
     <hr>
-
-    <div class="row">
-        <!-- Gráfico de ventas por mes -->
-        <div class="col-md-6 col-sm-12 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white text-center">
-                    <h3>Total en ventas por mes</h3>
-                </div>
-                <div class="card-body">
-                    <canvas asp-action="ObtenerVentasPorMes" asp-controller="Charts" id="ventasPorMesChart"></canvas>
-                    <div class="text-center">
-                        <h4 id="mensaje"></h4>
-                    </div>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4 col-sm-12 mb-3">
+                <h3 class="text-center">Total en ventas por mes</h3>
+                <canvas asp-action="ObtenerVentasPorMes" asp-controller="Charts" id="ventasPorMesChart"></canvas>
+                <div>
+                    <h4 id="mensaje"></h4>
                 </div>
             </div>
-        </div>
-
-        <!-- Gráfico de productos más vendidos -->
-        <div class="col-md-6 col-sm-12 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white text-center">
-                    <h3>5 Productos Más Vendidos</h3>
+            <div class="col-md-8 col-sm-12 mb-3 h-100">
+                <h3 class="text-center w-100">5 Productos Mas Vendidos</h3>
+                <div class="d-flex justify-content-center align-items-center">
+                    <canvas asp-action="Obtener5ProductosMasVendidos" asp-controller="Charts"
+                    id="productosMasVendidos"></canvas>
                 </div>
-                <div class="card-body">
-                    <canvas asp-action="Obtener5ProductosMasVendidos" asp-controller="Charts" id="productosMasVendidos"></canvas>
-                    <div class="text-center">
-                        <h4 id="mensaje"></h4>
-                    </div>
+                <div>
+                    <h4 id="mensaje"></h4>
                 </div>
             </div>
         </div>
@@ -42,29 +32,15 @@
 <style>
     canvas {
         max-height: 400px;
-        width: 100%;
-    }
-
-    .card-header {
-        font-weight: bold;
-    }
-
-    .card-body {
-        text-align: center;
-    }
-
-    .card {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
     }
 </style>
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
     let mensaje = document.getElementById("mensaje");
 
-    // Cargar gráfico de ventas por mes
     async function cargarVentasPorMes() {
         try {
             const response = await fetch('/Charts/ObtenerVentasPorMes');
@@ -72,7 +48,9 @@
                 throw new Error('Error al obtener los datos de ventas.');
             }
             const data = await response.json();
+            console.log(data);
 
+            // Etiquetas y datos para el gráfico
             const etiquetas = data.map(item => `${item.mes}/${item.anio}`);
             const totales = data.map(item => item.totalVentas);
 
@@ -113,11 +91,10 @@
             });
         } catch (error) {
             console.error(error);
-            mensaje.textContent = 'Error al cargar el gráfico.';
+            mensaje.textContent = 'Error al cargar el grafico.';
         }
     }
 
-    // Cargar gráfico de productos más vendidos
     async function cargarProductosMasVendidos() {
         try {
             const response = await fetch('/Charts/Obtener5ProductosMasVendidos');
@@ -125,12 +102,13 @@
                 throw new Error('Error al obtener los datos de los productos.');
             }
             const data = await response.json();
+            console.log(data); // Verificar los datos recibidos
 
             const bubbleData = data.map(item => {
                 return {
                     x: item.precioPromedio,
                     y: item.cantidadTotal,
-                    r: (item.cantidadTotal / 10) * 3  // Tamaño del bubble
+                    r: (item.cantidadTotal / 10) * 3  // aqui aumento el tamanio del bubble
                 };
             });
 
@@ -172,6 +150,7 @@
                                     const producto = context.chart.data.labels[context.dataIndex];
                                     const xValue = context.raw.x;
                                     const yValue = context.raw.y;
+                                    const rValue = context.raw.r;
                                     return `${producto}: Precio Promedio $${xValue}, Cantidad Vendida ${yValue}`;
                                 }
                             }
@@ -181,10 +160,11 @@
             });
         } catch (error) {
             console.error(error);
-            mensaje.textContent = 'No se logró cargar la gráfica.';
+            mensaje.textContent = 'No se logro cargar la grafica.';
         }
     }
 
     cargarVentasPorMes();
     cargarProductosMasVendidos();
+
 </script>
