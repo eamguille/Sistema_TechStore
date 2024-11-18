@@ -1,51 +1,45 @@
 @model Techstore_WebApp.Models.DB.ComprasEmpresa
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Nueva Compra";
 }
 
-<h1>Create</h1>
+<h2 class="mb-4 text-center">Crear Nueva Compra</h2>
 
-<h4>ComprasEmpresa</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row justify-content-center">
+    <div class="col-md-6">
         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="IdProveedor" class="control-label"></label>
-                <select asp-for="IdProveedor" class ="form-control" asp-items="ViewBag.IdProveedor"></select>
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            <div class="mb-3">
+                <label asp-for="IdProveedor" class="form-label">Proveedor</label>
+                <select asp-for="IdProveedor" class="form-control" asp-items="ViewBag.IdProveedor"></select>
             </div>
-            <div class="form-group">
-                <label asp-for="IdUsuario" class="control-label"></label>
-                <select asp-for="IdUsuario" class ="form-control" asp-items="ViewBag.IdUsuario"></select>
+            <div class="mb-3">
+                <label asp-for="IdUsuario" class="form-label">Usuario</label>
+                <select asp-for="IdUsuario" class="form-control" asp-items="ViewBag.IdUsuario"></select>
             </div>
-            <div class="form-group">
-                <label asp-for="FechaCompra" class="control-label"></label>
-                <input type="date" asp-for="FechaCompra" class="form-control" />
+            <div class="mb-3">
+                <label asp-for="FechaCompra" class="form-label">Fecha</label>
+                <input asp-for="FechaCompra" type="date" class="form-control" />
                 <span asp-validation-for="FechaCompra" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="TotalCompra" class="control-label"></label>
-                <input type="number" asp-for="TotalCompra" class="form-control" />
+            <div class="mb-3">
+                <label asp-for="TotalCompra" class="form-label">Total</label>
+                <input asp-for="TotalCompra" type="number" step="0.01" class="form-control" />
                 <span asp-validation-for="TotalCompra" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="EstadoCompra" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="EstadoCompra" class="form-label">Estado</label>
                 <select asp-for="EstadoCompra" class="form-control">
                     <option value="Completada">Completada</option>
                     <option value="Pendiente">Pendiente</option>
                 </select>
                 <span asp-validation-for="EstadoCompra" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success">Crear Compra</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

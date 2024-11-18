@@ -1,40 +1,38 @@
 @model IEnumerable<Techstore_WebApp.Models.DB.Producto>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Productos";
 }
 
 <h2 class="mb-5 text-center">Productos</h2>
 
-<div class="d-flex justify-content-between flex-wrap mb-3">
-    <div>
-        <a asp-action="Create" class="btn btn-success">Crear nuevo producto</a>
-    </div>
-    <div class="w-100 w-md-50 mt-2 mt-md-0">
-        <input type="text" id="buscador" class="form-control" placeholder="Busca un producto...">
+<div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+    <a asp-action="Create" class="btn btn-success">Crear Nuevo Producto</a>
+    <div class="w-100 w-md-50 mt-3 mt-md-0">
+        <input type="text" id="buscador" class="form-control" placeholder="Buscar un producto...">
     </div>
 </div>
 
 <div class="table-responsive">
-    <table class="table table-striped">
-        <thead class="table-light">
-            <tr class="text-center align-middle">
-                <th>Nombre Producto</th>
+    <table class="table table-striped align-middle">
+        <thead class="table-light text-center">
+            <tr>
+                <th>Nombre</th>
                 <th class="d-none d-md-table-cell">Descripción</th>
                 <th class="d-none d-lg-table-cell">Precio Compra</th>
                 <th class="d-none d-lg-table-cell">Precio Venta</th>
-                <th class="d-none d-lg-table-cell">Cantidad Stock</th>
+                <th class="d-none d-lg-table-cell">Stock</th>
                 <th class="d-none d-lg-table-cell">Estado</th>
                 <th class="d-none d-xl-table-cell">Categoría</th>
                 <th class="d-none d-xl-table-cell">Modelo</th>
-                <th class="d-none d-xl-table-cell">Tipo Producto</th>
+                <th class="d-none d-xl-table-cell">Tipo</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody id="cuerpoTabla">
             @foreach (var item in Model)
             {
-                <tr class="text-center align-middle">
+                <tr class="text-center">
                     <td>@Html.DisplayFor(modelItem => item.NombreProducto)</td>
                     <td class="d-none d-md-table-cell">@Html.DisplayFor(modelItem => item.DescripcionProducto)</td>
                     <td class="d-none d-lg-table-cell">$@Html.DisplayFor(modelItem => item.PrecioCompra)</td>
@@ -45,14 +43,14 @@
                     <td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem => item.IdModeloNavigation.Modelo1)</td>
                     <td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem => item.IdTipoProductoNavigation.TipoProducto)</td>
                     <td>
-                        <div class="d-flex justify-content-center">
-                            <a asp-action="Edit" class="btn btn-primary btn-sm me-2" asp-route-id="@item.IdProducto" title="Editar">
+                        <div class="d-flex justify-content-center gap-2">
+                            <a asp-action="Edit" asp-route-id="@item.IdProducto" class="btn btn-primary btn-sm" title="Editar">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a asp-action="Details" class="btn btn-warning btn-sm me-2" asp-route-id="@item.IdProducto" title="Detalles">
+                            <a asp-action="Details" asp-route-id="@item.IdProducto" class="btn btn-warning btn-sm" title="Detalles">
                                 <i class="bi bi-archive"></i>
                             </a>
-                            <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.IdProducto" title="Eliminar">
+                            <a asp-action="Delete" asp-route-id="@item.IdProducto" class="btn btn-danger btn-sm" title="Eliminar">
                                 <i class="bi bi-trash-fill"></i>
                             </a>
                         </div>
@@ -87,7 +85,7 @@
 
                     data.forEach(producto => {
                         const row = `
-                                    <tr class="text-center align-middle">
+                                    <tr class="text-center">
                                         <td>${producto.nombreProducto}</td>
                                         <td class="d-none d-md-table-cell">${producto.descripcionProducto}</td>
                                         <td class="d-none d-lg-table-cell">$${producto.precioCompra}</td>
@@ -98,11 +96,11 @@
                                         <td class="d-none d-xl-table-cell">${producto.modelo1 || ''}</td>
                                         <td class="d-none d-xl-table-cell">${producto.tipoProducto || ''}</td>
                                         <td>
-                                            <div class="d-flex justify-content-center">
-                                                <a href="/Productos/Edit/${producto.idProducto}" class="btn btn-primary btn-sm me-2" title="Editar">
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <a href="/Productos/Edit/${producto.idProducto}" class="btn btn-primary btn-sm" title="Editar">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
-                                                <a href="/Productos/Details/${producto.idProducto}" class="btn btn-warning btn-sm me-2" title="Detalles">
+                                                <a href="/Productos/Details/${producto.idProducto}" class="btn btn-warning btn-sm" title="Detalles">
                                                     <i class="bi bi-archive"></i>
                                                 </a>
                                                 <a href="/Productos/Delete/${producto.idProducto}" class="btn btn-danger btn-sm" title="Eliminar">
@@ -110,8 +108,7 @@
                                                 </a>
                                             </div>
                                         </td>
-                                    </tr>
-                                `;
+                                    </tr>`;
                         cuerpoTabla.innerHTML += row;
                     });
                 })

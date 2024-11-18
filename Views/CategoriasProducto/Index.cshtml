@@ -1,54 +1,49 @@
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+5hb7U4HOJIkfUmEXBpO4uP7KcsfuwwaCB3k6bB" crossorigin="anonymous">
 @model IEnumerable<Techstore_WebApp.Models.DB.CategoriasProducto>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Categorías";
 }
 
-<h2 class="mb-5">Categorias</h2>
+<h2 class="mb-4 text-center">Categorías</h2>
 
-<div class="d-flex justify-content-between">
-    <div>
-        <p>
-            <a asp-action="Create" class="btn btn-success">Agregar nueva categoria</a>
-        </p>
-    </div>
-    <div class="w-50">
-        <input type="text" id="buscador" class="form-control" placeholder="Busca una categoria...">
+<div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+    <a asp-action="Create" class="btn btn-success">Agregar Nueva Categoría</a>
+    <div class="w-100 w-md-50 mt-3 mt-md-0">
+        <input type="text" id="buscador" class="form-control" placeholder="Buscar una categoría...">
     </div>
 </div>
 
-<table class="table table-striped">
-    <thead class="table-light">
-        <tr class="text-center align-middle">
-            <th>
-                @Html.DisplayNameFor(model => model.Categoria)
-            </th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody id="cuerpoTabla">
-        @foreach (var item in Model)
-        {
-            <tr class="text-center align-middle">
-                <td>
-                    @Html.DisplayFor(modelItem => item.Categoria)
-                </td>
-                <td>
-                    <div class="d-flex flex-nowrap justify-content-center">
-                        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.IdCategoriaProducto"
-                           title="Editar"><i class="bi bi-pencil-square text-white"></i></a>
-                        <a asp-action="Details" class="btn btn-warning mx-2" asp-route-id="@item.IdCategoriaProducto"
-                           title="Detalles"><i class="bi bi-archive text-white"></i></a>
-                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.IdCategoriaProducto"
-                           title="Eliminar"><i class="bi bi-trash-fill text-white"></i></a>
-                    </div>
-                </td>
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead class="table-light text-center">
+            <tr>
+                <th>Nombre de Categoría</th>
+                <th>Acciones</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody id="cuerpoTabla">
+            @foreach (var item in Model)
+            {
+                <tr class="text-center">
+                    <td>@Html.DisplayFor(modelItem => item.Categoria)</td>
+                    <td>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a asp-action="Edit" asp-route-id="@item.IdCategoriaProducto" class="btn btn-primary btn-sm">
+                                <i class="bi bi-pencil-square"></i> Editar
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.IdCategoriaProducto" class="btn btn-warning btn-sm">
+                                <i class="bi bi-archive"></i> Detalles
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.IdCategoriaProducto" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash-fill"></i> Eliminar
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @section Scripts {
     <script>
@@ -58,7 +53,7 @@
             try {
                 const response = await fetch(`/CategoriasProducto/Buscador?texto=${texto}`);
                 if (!response.ok) {
-                    throw new Error('Error al buscar la categoria');
+                    throw new Error('Error al buscar la categoría');
                 }
 
                 const categorias = await response.json();
@@ -73,21 +68,21 @@
             tabla.innerHTML = '';
 
             if (categorias.length === 0) {
-                tabla.innerHTML = '<tr><td colspan="2" class="text-center">No se encontraron categorias.</td></tr>';
+                tabla.innerHTML = '<tr><td colspan="2" class="text-center">No se encontraron categorías.</td></tr>';
                 return;
             }
 
             categorias.forEach(categoria => {
                 const fila = document.createElement('tr');
-                fila.classList.add('text-center', 'align-middle');
+                fila.classList.add('text-center');
 
                 fila.innerHTML = `
                             <td>${categoria.categoria}</td>
                             <td>
-                                <div class="d-flex flex-nowrap justify-content-center">
-                                    <a href="/CategoriasProducto/Edit/${categoria.idCategoriaProducto}" class="btn btn-primary" title="Editar"><i class="bi bi-pencil-square text-white"></i></a>
-                                    <a href="/CategoriasProducto/Details/${categoria.idCategoriaProducto}" class="btn btn-warning mx-2" title="Detalles"><i class="bi bi-archive text-white"></i></a>
-                                    <a href="/CategoriasProducto/Delete/${categoria.idCategoriaProducto}" class="btn btn-danger" title="Eliminar"><i class="bi bi-trash-fill text-white"></i></a>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="/CategoriasProducto/Edit/${categoria.idCategoriaProducto}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i> Editar</a>
+                                    <a href="/CategoriasProducto/Details/${categoria.idCategoriaProducto}" class="btn btn-warning btn-sm"><i class="bi bi-archive"></i> Detalles</a>
+                                    <a href="/CategoriasProducto/Delete/${categoria.idCategoriaProducto}" class="btn btn-danger btn-sm"><i class="bi bi-trash-fill"></i> Eliminar</a>
                                 </div>
                             </td>
                         `;
@@ -96,5 +91,3 @@
         }
     </script>
 }
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoXuhD6Mo6G7ftzjKAAElRHtD38I8IwvUghkODMSzV6p9kk" crossorigin="anonymous"></script>
