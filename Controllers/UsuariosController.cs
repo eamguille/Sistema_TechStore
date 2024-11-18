@@ -15,8 +15,6 @@ namespace Techstore_WebApp.Controllers
     {
         private readonly DbTechStoreContext _context;
 
-        private readonly List<string> rolesPermitidos = new List<string> { "root", "administrador", "empleado" };
-
         public UsuariosController(DbTechStoreContext context)
         {
             _context = context;
@@ -49,21 +47,17 @@ namespace Techstore_WebApp.Controllers
         // GET: Usuarios/Create
         public IActionResult Create()
         {
-            ViewBag.Roles = rolesPermitidos.Select(rol => new SelectListItem { Value = rol, Text = rol });
             return View();
         }
 
         // POST: Usuarios/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdUsuario,Nombres,Apellidos,NombreUsuario,Clave,Email,Telefono,Direccion,Rol")] Usuario usuario)
         {
-            if (!rolesPermitidos.Contains(usuario.Rol))
-            {
-                ModelState.AddModelError("Rol", "El rol ingresado no es válido.");
-            }
-
-            if (ModelState.IsValid)
+            if (usuario.IdUsuario == null)
             {
                 usuario.IdUsuario = GenerarID();
                 usuario.Clave = EncriptarClaveGenerada(usuario.Clave);
@@ -72,8 +66,6 @@ namespace Techstore_WebApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
-            ViewBag.Roles = rolesPermitidos.Select(rol => new SelectListItem { Value = rol, Text = rol });
             return View(usuario);
         }
 
@@ -90,12 +82,12 @@ namespace Techstore_WebApp.Controllers
             {
                 return NotFound();
             }
-
-            ViewBag.Roles = rolesPermitidos.Select(rol => new SelectListItem { Value = rol, Text = rol, Selected = rol == usuario.Rol });
             return View(usuario);
         }
 
         // POST: Usuarios/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("IdUsuario,Nombres,Apellidos,NombreUsuario,Clave,Email,Telefono,Direccion,Rol")] Usuario usuario)
@@ -103,11 +95,6 @@ namespace Techstore_WebApp.Controllers
             if (id != usuario.IdUsuario)
             {
                 return NotFound();
-            }
-
-            if (!rolesPermitidos.Contains(usuario.Rol))
-            {
-                ModelState.AddModelError("Rol", "El rol ingresado no es válido.");
             }
 
             if (ModelState.IsValid)
@@ -146,8 +133,6 @@ namespace Techstore_WebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-
-            ViewBag.Roles = rolesPermitidos.Select(rol => new SelectListItem { Value = rol, Text = rol });
             return View(usuario);
         }
 
@@ -192,8 +177,8 @@ namespace Techstore_WebApp.Controllers
         private string GenerarID()
         {
             var ultimoUsuario = _context.Usuarios
-                .OrderByDescending(u => u.IdUsuario)
-                .FirstOrDefault();
+            .OrderByDescending(u => u.IdUsuario)
+            .FirstOrDefault();
 
             if (ultimoUsuario == null)
             {
@@ -201,9 +186,12 @@ namespace Techstore_WebApp.Controllers
             }
 
             string ultimoID = ultimoUsuario.IdUsuario;
-            if (int.TryParse(ultimoID.Substring(1), out int numero))
+            int numero;
+
+            if (int.TryParse(ultimoID.Substring(1), out numero))
             {
-                return $"U{(++numero):D5}";
+                numero++;
+                return $"U{numero:D5}";
             }
 
             return "U00001";
@@ -215,7 +203,12 @@ namespace Techstore_WebApp.Controllers
             {
                 byte[] bytes = Encoding.UTF8.GetBytes(clave);
                 byte[] hash = sha256.ComputeHash(bytes);
-                return string.Concat(hash.Select(b => b.ToString("x2")));
+                StringBuilder resultado = new StringBuilder();
+                foreach (byte b in hash)
+                {
+                    resultado.Append(b.ToString("x2"));
+                }
+                return resultado.ToString();
             }
         }
 

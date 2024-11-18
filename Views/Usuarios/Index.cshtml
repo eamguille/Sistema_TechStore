@@ -6,9 +6,11 @@
 
 <h2 class="text-center mb-5">Usuarios</h2>
 
-<div class="d-flex justify-content-between flex-wrap mb-4">
-    <a asp-action="Create" class="btn btn-success">Agregar Nuevo Usuario</a>
-    <div class="w-100 w-md-50 mt-3 mt-md-0">
+<div class="row justify-content-between align-items-center flex-wrap mb-4">
+    <div class="col-12 col-md-auto mb-3 mb-md-0">
+        <a asp-action="Create" class="btn btn-success w-100"><i class="bi bi-plus-circle"></i> Agregar Nuevo Usuario</a>
+    </div>
+    <div class="col-12 col-md-6">
         <input type="text" id="buscador" class="form-control" placeholder="Buscar un usuario...">
     </div>
 </div>
@@ -20,7 +22,7 @@
                 <th>Nombres</th>
                 <th class="d-none d-sm-table-cell">Apellidos</th>
                 <th class="d-none d-md-table-cell">Usuario</th>
-                <th class="d-none d-lg-table-cell">Email</th>
+                <th class="d-none d-lg-table-cell">Correo Electrónico</th>
                 <th class="d-none d-lg-table-cell">Teléfono</th>
                 <th class="d-none d-xl-table-cell">Dirección</th>
                 <th class="d-none d-xl-table-cell">Rol</th>
@@ -41,13 +43,13 @@
                     <td>
                         <div class="d-flex justify-content-center gap-2">
                             <a asp-action="Edit" asp-route-id="@item.IdUsuario" class="btn btn-primary btn-sm" title="Editar">
-                                <i class="bi bi-pencil-square"></i>
+                                <i class="bi bi-pencil-square"></i> Editar
                             </a>
                             <a asp-action="Details" asp-route-id="@item.IdUsuario" class="btn btn-warning btn-sm" title="Detalles">
-                                <i class="bi bi-archive"></i>
+                                <i class="bi bi-archive"></i> Detalles
                             </a>
                             <a asp-action="Delete" asp-route-id="@item.IdUsuario" class="btn btn-danger btn-sm" title="Eliminar">
-                                <i class="bi bi-trash-fill"></i>
+                                <i class="bi bi-trash-fill"></i> Eliminar
                             </a>
                         </div>
                     </td>
@@ -84,23 +86,23 @@
 
             usuarios.forEach(usuario => {
                 tabla.innerHTML += `
-                            <tr class="text-center">
-                                <td>${usuario.nombres}</td>
-                                <td class="d-none d-sm-table-cell">${usuario.apellidos}</td>
-                                <td class="d-none d-md-table-cell">${usuario.nombreUsuario}</td>
-                                <td class="d-none d-lg-table-cell">${usuario.email}</td>
-                                <td class="d-none d-lg-table-cell">${usuario.telefono}</td>
-                                <td class="d-none d-xl-table-cell">${usuario.direccion}</td>
-                                <td class="d-none d-xl-table-cell">${usuario.rol}</td>
-                                <td>
-                                    <div class="d-flex justify-content-center gap-2">
-                                        <a href="/Usuarios/Edit/${usuario.idUsuario}" class="btn btn-primary btn-sm" title="Editar"><i class="bi bi-pencil-square"></i></a>
-                                        <a href="/Usuarios/Details/${usuario.idUsuario}" class="btn btn-warning btn-sm" title="Detalles"><i class="bi bi-archive"></i></a>
-                                        <a href="/Usuarios/Delete/${usuario.idUsuario}" class="btn btn-danger btn-sm" title="Eliminar"><i class="bi bi-trash-fill"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                        `;
+                                    <tr class="text-center">
+                                        <td>${usuario.nombres}</td>
+                                        <td class="d-none d-sm-table-cell">${usuario.apellidos}</td>
+                                        <td class="d-none d-md-table-cell">${usuario.nombreUsuario}</td>
+                                        <td class="d-none d-lg-table-cell">${usuario.email}</td>
+                                        <td class="d-none d-lg-table-cell">${usuario.telefono}</td>
+                                        <td class="d-none d-xl-table-cell">${usuario.direccion}</td>
+                                        <td class="d-none d-xl-table-cell">${usuario.rol}</td>
+                                        <td>
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <a href="/Usuarios/Edit/${usuario.idUsuario}" class="btn btn-primary btn-sm" title="Editar"><i class="bi bi-pencil-square"></i> Editar</a>
+                                                <a href="/Usuarios/Details/${usuario.idUsuario}" class="btn btn-warning btn-sm" title="Detalles"><i class="bi bi-archive"></i> Detalles</a>
+                                                <a href="/Usuarios/Delete/${usuario.idUsuario}" class="btn btn-danger btn-sm" title="Eliminar"><i class="bi bi-trash-fill"></i> Eliminar</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `;
             });
         }
     </script>
