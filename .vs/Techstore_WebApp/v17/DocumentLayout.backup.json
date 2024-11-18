@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\views\\usuarios\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|solutionrelative:views\\usuarios\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\views\\usuarios\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|solutionrelative:views\\usuarios\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\views\\usuarios\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|solutionrelative:views\\usuarios\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -13,14 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\views\\usuarios\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|solutionrelative:views\\usuarios\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\views\\usuarios\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|solutionrelative:views\\usuarios\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\views\\usuarios\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|solutionrelative:views\\usuarios\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,7 +42,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Usuarios\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Usuarios\\Index.cshtml",
@@ -50,59 +50,58 @@
               "RelativeToolTip": "Views\\Usuarios\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAG0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-18T02:08:09.634Z",
+              "WhenOpened": "2024-11-18T02:08:09.634Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Usuarios\\Create.cshtml",
+              "RelativeDocumentMoniker": "Views\\Usuarios\\Create.cshtml",
+              "ToolTip": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Usuarios\\Create.cshtml",
+              "RelativeToolTip": "Views\\Usuarios\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-18T02:05:49.556Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Usuarios\\Edit.cshtml",
               "RelativeDocumentMoniker": "Views\\Usuarios\\Edit.cshtml",
               "ToolTip": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Usuarios\\Edit.cshtml",
               "RelativeToolTip": "Views\\Usuarios\\Edit.cshtml",
-              "ViewState": "AgIAADMAAAAAAAAAAAAiwE0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-11-18T02:08:08.524Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Usuarios\\Details.cshtml",
               "RelativeDocumentMoniker": "Views\\Usuarios\\Details.cshtml",
               "ToolTip": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Usuarios\\Details.cshtml",
               "RelativeToolTip": "Views\\Usuarios\\Details.cshtml",
-              "ViewState": "AgIAACgAAAAAAAAAAAAiwDIAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-11-18T02:08:07.882Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Usuarios\\Delete.cshtml",
               "RelativeDocumentMoniker": "Views\\Usuarios\\Delete.cshtml",
               "ToolTip": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Usuarios\\Delete.cshtml",
               "RelativeToolTip": "Views\\Usuarios\\Delete.cshtml",
-              "ViewState": "AgIAACkAAAAAAAAAAAAqwDEAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAowDEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-11-18T02:08:05.897Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Usuarios\\Create.cshtml",
-              "RelativeDocumentMoniker": "Views\\Usuarios\\Create.cshtml",
-              "ToolTip": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Usuarios\\Create.cshtml",
-              "RelativeToolTip": "Views\\Usuarios\\Create.cshtml",
-              "ViewState": "AgIAADYAAAAAAAAAAAAiwFAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-18T02:05:49.556Z",
               "EditorCaption": ""
             },
             {
@@ -115,8 +114,7 @@
               "RelativeToolTip": "Controllers\\UsuariosController.cs",
               "ViewState": "AgIAANsAAAAAAAAAAAAqwPcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-18T02:05:24.252Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-18T02:05:24.252Z"
             }
           ]
         }
