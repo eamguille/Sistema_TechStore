@@ -11,7 +11,7 @@
         <a asp-action="Create" class="btn btn-success">Agregar Nuevo Cliente</a>
     </div>
     <div class="w-100 w-md-50 mt-2 mt-md-0">
-        <input type="text" id="buscador" class="form-control" placeholder="Buscar un cliente...">
+        <input type="text" id="buscador" class="form-control" placeholder="Buscar un producto...">
     </div>
 </div>
 
@@ -54,3 +54,45 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    document.getElementById('buscador').addEventListener('input', function () {
+        const searchText = this.value;
+
+        fetch(`/Clientes/Buscador?texto=${encodeURIComponent(searchText)}`)
+            .then(response => response.json())
+            .then(data => {
+                const cuerpoTabla = document.getElementById('cuerpoTabla');
+                cuerpoTabla.innerHTML = '';
+
+                data.forEach(cliente => {
+                    const row = document.createElement('tr');
+                    row.className = 'text-center align-middle';
+
+                    row.innerHTML = `
+                        <td>${cliente.nombreCliente}</td>
+                        <td class="d-none d-md-table-cell">${cliente.dui}</td>
+                        <td class="d-none d-lg-table-cell">${cliente.telefono}</td>
+                        <td class="d-none d-lg-table-cell">${cliente.email}</td>
+                        <td class="d-none d-xl-table-cell">${cliente.direccion}</td>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <a href="/Clientes/Edit/${cliente.idCliente}" class="btn btn-primary btn-sm me-2" title="Editar">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+                                <a href="/Clientes/Details/${cliente.idCliente}" class="btn btn-warning btn-sm me-2" title="Detalles">
+                                    <i class="bi bi-archive"></i> Detalles
+                                </a>
+                                <a href="/Clientes/Delete/${cliente.idCliente}" class="btn btn-danger btn-sm" title="Eliminar">
+                                    <i class="bi bi-trash-fill"></i> Eliminar
+                                </a>
+                            </div>
+                        </td>
+                    `;
+
+                    cuerpoTabla.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
