@@ -1,133 +1,102 @@
 @model IEnumerable<Techstore_WebApp.Models.DB.VentasEmpresa>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Ventas de la Empresa";
 }
 
-<h2 class="mb-5">Ventas de la Empresa</h2>
+<h2 class="text-center mb-5">Ventas de la Empresa</h2>
 
-<div class="d-flex justify-content-between">
-    <div>
-        <p>
-            <a asp-action="Create" class="btn btn-success">Agregar nueva venta</a>
-        </p>
+<div class="row justify-content-between align-items-center mb-4">
+    <div class="col-12 col-md-auto mb-3 mb-md-0">
+        <a asp-action="Create" class="btn btn-success w-100"><i class="bi bi-plus-circle"></i> Agregar Nueva Venta</a>
     </div>
-    <div class="w-50">
+    <div class="col-12 col-md-6">
         <input type="text" id="buscador" class="form-control" placeholder="Busca un registro de venta...">
     </div>
 </div>
 
-<table class="table">
-    <thead>
-        <tr class="text-center">
-            <th>
-                @Html.DisplayNameFor(model => model.FechaVenta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalVenta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MetodoPago)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EstadoVenta)
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.IdClienteNavigation) *@
-                Cliente
-            </th>
-            <th>
-                @* @Html.DisplayNameFor(model => model.IdUsuarioNavigation) *@
-                Usuario
-            </th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody id="cuerpoTabla">
-        @foreach (var item in Model)
-        {
-            <tr class="text-center">
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaVenta)
-                </td>
-                <td>
-                    $@Html.DisplayFor(modelItem => item.TotalVenta)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MetodoPago)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EstadoVenta)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdClienteNavigation.NombreCliente)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdUsuarioNavigation.NombreUsuario)
-                </td>
-                <td>
-                    <div class="d-flex flex-nowrap justify-content-center">
-                        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.IdVenta" title="Editar"><i
-                                class="bi bi-pencil-square text-white"></i></a>
-                        <a asp-action="Details" class="btn btn-warning mx-2" asp-route-id="@item.IdVenta"
-                            title="Detalles"><i class="bi bi-archive text-white"></i></a>
-                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.IdVenta" title="Eliminar"><i
-                                class="bi bi-trash-fill text-white"></i></a>
-                    </div>
-                </td>
+<div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-light text-center">
+            <tr>
+                <th>Fecha Venta</th>
+                <th>Total Venta</th>
+                <th class="d-none d-sm-table-cell">Método Pago</th>
+                <th class="d-none d-md-table-cell">Estado</th>
+                <th class="d-none d-lg-table-cell">Cliente</th>
+                <th class="d-none d-lg-table-cell">Usuario</th>
+                <th>Acciones</th>
             </tr>
-        }
-    </tbody>
-</table>
-
-<script>
-    document.getElementById('buscador').addEventListener('keyup', async (e) => {
-        const texto = e.target.value.trim();
-
-        try {
-            // Realizar la búsqueda, incluso si el texto está vacío
-            const response = await fetch(`/Ventas/Buscador?texto=${texto}`);
-            if (!response.ok) {
-                throw new Error('Error al buscar el registro de venta');
+        </thead>
+        <tbody id="cuerpoTabla">
+            @foreach (var item in Model)
+            {
+                <tr class="text-center">
+                    <td>@Html.DisplayFor(modelItem => item.FechaVenta)</td>
+                    <td>$@Html.DisplayFor(modelItem => item.TotalVenta)</td>
+                    <td class="d-none d-sm-table-cell">@Html.DisplayFor(modelItem => item.MetodoPago)</td>
+                    <td class="d-none d-md-table-cell">@Html.DisplayFor(modelItem => item.EstadoVenta)</td>
+                    <td class="d-none d-lg-table-cell">@Html.DisplayFor(modelItem => item.IdClienteNavigation.NombreCliente)</td>
+                    <td class="d-none d-lg-table-cell">@Html.DisplayFor(modelItem => item.IdUsuarioNavigation.NombreUsuario)</td>
+                    <td>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a asp-action="Edit" class="btn btn-primary btn-sm" asp-route-id="@item.IdVenta" title="Editar">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a asp-action="Details" class="btn btn-warning btn-sm" asp-route-id="@item.IdVenta" title="Detalles">
+                                <i class="bi bi-archive"></i>
+                            </a>
+                            <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.IdVenta" title="Eliminar">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
             }
+        </tbody>
+    </table>
+</div>
 
-            const ventas = await response.json();
-            console.log(ventas);
-            actualizarTabla(ventas);
-        } catch (error) {
-            console.error(error);
-        }
-    });
-
-    function actualizarTabla(ventas) {
-        const tabla = document.getElementById('cuerpoTabla');
-        tabla.innerHTML = '';
-
-        if (ventas.length === 0) {
-            tabla.innerHTML = '<tr><td colspan="9" class="text-center">No se encontraron registros de ventas.</td></tr>';
-            return;
-        }
-
-        ventas.forEach(venta => {
-            const fila = document.createElement('tr');
-            fila.classList.add('text-center', 'align-middle');
-
-            fila.innerHTML = `
-                <td>${venta.fechaVenta}</td>
-                <td>$${venta.totalVenta}</td>
-                <td>${venta.metodoPago}</td>
-                <td>${venta.estadoVenta}</td>
-                <td>${venta.nombreCliente}</td>
-                <td>${venta.nombreUsuario}</td>
-                <td>
-                    <div class="d-flex flex-nowrap">
-                        <a href="/Ventas/Edit/${venta.idVenta}" class="btn btn-primary" title="Editar"><i class="bi bi-pencil-square text-white"></i></a>
-                        <a href="/Ventas/Details/${venta.idVenta}" class="btn btn-warning mx-2" title="Detalles"><i class="bi bi-archive text-white"></i></a>
-                        <a href="/Ventas/Delete/${venta.idVenta}" class="btn btn-danger" title="Eliminar"><i class="bi bi-trash-fill text-white"></i></a>
-                    </div>
-                </td>
-            `;
-            tabla.appendChild(fila);
+@section Scripts {
+    <script>
+        document.getElementById('buscador').addEventListener('keyup', async (e) => {
+            const texto = e.target.value.trim();
+            try {
+                const response = await fetch(`/Ventas/Buscador?texto=${texto}`);
+                if (!response.ok) throw new Error('Error al buscar el registro de venta');
+                const ventas = await response.json();
+                actualizarTabla(ventas);
+            } catch (error) {
+                console.error(error);
+            }
         });
-    }
-</script>
+
+        function actualizarTabla(ventas) {
+            const tabla = document.getElementById('cuerpoTabla');
+            tabla.innerHTML = '';
+            if (ventas.length === 0) {
+                tabla.innerHTML = '<tr><td colspan="7" class="text-center">No se encontraron registros de ventas.</td></tr>';
+                return;
+            }
+            ventas.forEach(venta => {
+                const fila = `
+                            <tr class="text-center">
+                                <td>${venta.fechaVenta}</td>
+                                <td>$${venta.totalVenta}</td>
+                                <td class="d-none d-sm-table-cell">${venta.metodoPago}</td>
+                                <td class="d-none d-md-table-cell">${venta.estadoVenta}</td>
+                                <td class="d-none d-lg-table-cell">${venta.nombreCliente}</td>
+                                <td class="d-none d-lg-table-cell">${venta.nombreUsuario}</td>
+                                <td>
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <a href="/Ventas/Edit/${venta.idVenta}" class="btn btn-primary btn-sm" title="Editar"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="/Ventas/Details/${venta.idVenta}" class="btn btn-warning btn-sm" title="Detalles"><i class="bi bi-archive"></i></a>
+                                        <a href="/Ventas/Delete/${venta.idVenta}" class="btn btn-danger btn-sm" title="Eliminar"><i class="bi bi-trash-fill"></i></a>
+                                    </div>
+                                </td>
+                            </tr>`;
+                tabla.innerHTML += fila;
+            });
+        }
+    </script>
+}

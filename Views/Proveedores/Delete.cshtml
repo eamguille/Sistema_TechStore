@@ -6,14 +6,40 @@
 
 <h2 class="text-center mb-4 text-danger">Eliminar Proveedor</h2>
 
-<div class="alert alert-warning text-center">
-    <p>¿Estás seguro de que deseas eliminar al proveedor <strong>@Model.NombreProveedor</strong>?</p>
-</div>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-center text-danger">¿Estás seguro que deseas eliminar este proveedor?</h5>
+                <p class="text-center">
+                    Proveedor: <strong>@Model.NombreProveedor</strong>
+                </p>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-4 text-end fw-bold">DUI:</dt>
+                    <dd class="col-sm-8">@Model.Dui</dd>
 
-<div class="d-flex justify-content-center gap-3">
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IdProveedor" />
-        <button type="submit" class="btn btn-danger">Eliminar</button>
-    </form>
-    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                    <dt class="col-sm-4 text-end fw-bold">Teléfono:</dt>
+                    <dd class="col-sm-8">@Model.Telefono</dd>
+
+                    <dt class="col-sm-4 text-end fw-bold">Email:</dt>
+                    <dd class="col-sm-8">@Model.Email</dd>
+
+                    <dt class="col-sm-4 text-end fw-bold">Dirección:</dt>
+                    <dd class="col-sm-8">@Model.Direccion</dd>
+                </dl>
+                <div class="d-flex justify-content-between">
+                    <form asp-action="Delete" class="d-inline">
+                        <input type="hidden" asp-for="IdProveedor" />
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </button>
+                    </form>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Cancelar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

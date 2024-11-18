@@ -3,24 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\views\\proveedores\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|solutionrelative:views\\proveedores\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\views\\proveedores\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|solutionrelative:views\\proveedores\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\views\\proveedores\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|solutionrelative:views\\proveedores\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\views\\proveedores\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|solutionrelative:views\\proveedores\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\views\\proveedores\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|solutionrelative:views\\proveedores\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|c:\\users\\alex\\documents\\github\\sistema_techstore\\views\\compras\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1F0F4E94-DAB8-433B-AAE9-669F86D7C005}|Techstore_WebApp.csproj|solutionrelative:views\\compras\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,67 +22,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Proveedores\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Proveedores\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Proveedores\\Index.cshtml",
-              "RelativeToolTip": "Views\\Proveedores\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-18T00:52:15.334Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Edit.cshtml",
-              "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Proveedores\\Edit.cshtml",
-              "RelativeDocumentMoniker": "Views\\Proveedores\\Edit.cshtml",
-              "ToolTip": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Proveedores\\Edit.cshtml",
-              "RelativeToolTip": "Views\\Proveedores\\Edit.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-18T00:52:14.432Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Proveedores\\Details.cshtml",
-              "RelativeDocumentMoniker": "Views\\Proveedores\\Details.cshtml",
-              "ToolTip": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Proveedores\\Details.cshtml",
-              "RelativeToolTip": "Views\\Proveedores\\Details.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-18T00:52:13.505Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Delete.cshtml",
-              "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Proveedores\\Delete.cshtml",
-              "RelativeDocumentMoniker": "Views\\Proveedores\\Delete.cshtml",
-              "ToolTip": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Proveedores\\Delete.cshtml",
-              "RelativeToolTip": "Views\\Proveedores\\Delete.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Compras\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Compras\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Compras\\Index.cshtml",
+              "RelativeToolTip": "Views\\Compras\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-18T00:52:12.468Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Proveedores\\Create.cshtml",
-              "RelativeDocumentMoniker": "Views\\Proveedores\\Create.cshtml",
-              "ToolTip": "C:\\Users\\Alex\\Documents\\GitHub\\Sistema_TechStore\\Views\\Proveedores\\Create.cshtml",
-              "RelativeToolTip": "Views\\Proveedores\\Create.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-18T00:52:11.762Z",
+              "WhenOpened": "2024-11-18T01:37:06.732Z",
               "EditorCaption": ""
             }
           ]

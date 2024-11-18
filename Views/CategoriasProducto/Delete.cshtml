@@ -4,16 +4,29 @@
     ViewData["Title"] = "Eliminar Categoría";
 }
 
-<h2 class="mb-4 text-danger text-center">Eliminar Categoría</h2>
+<h2 class="text-center mb-4 text-danger">Eliminar Categoría</h2>
 
-<div class="alert alert-warning text-center">
-    <p>¿Estás seguro que deseas eliminar la categoría <strong>@Model.Categoria</strong>?</p>
-</div>
-
-<div class="d-flex justify-content-center gap-3">
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IdCategoriaProducto" />
-        <button type="submit" class="btn btn-danger">Eliminar</button>
-    </form>
-    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-center text-danger">¿Estás seguro que deseas eliminar esta categoría?</h5>
+                <p class="text-center">
+                    Categoría: <strong>@Model.Categoria</strong>
+                </p>
+                <hr />
+                <div class="d-flex justify-content-between">
+                    <form asp-action="Delete" class="d-inline">
+                        <input type="hidden" asp-for="IdCategoriaProducto" />
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </button>
+                    </form>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Cancelar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -6,18 +6,43 @@
 
 <h2 class="text-center mb-4 text-danger">Eliminar Producto</h2>
 
-<div class="alert alert-warning text-center">
-    <p>¿Estás seguro de que deseas eliminar el producto <strong>@Model.NombreProducto</strong>?</p>
-</div>
-
 <div class="row justify-content-center">
-    <div class="col-auto">
-        <form asp-action="Delete">
-            <input type="hidden" asp-for="IdProducto" />
-            <button type="submit" class="btn btn-danger">Eliminar</button>
-        </form>
-    </div>
-    <div class="col-auto">
-        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-center text-danger">¿Estás seguro de que deseas eliminar este producto?</h5>
+                <p class="text-center">
+                    <strong>@Model.NombreProducto</strong>
+                </p>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-4 text-end fw-bold">Descripción:</dt>
+                    <dd class="col-sm-8">@Model.DescripcionProducto</dd>
+
+                    <dt class="col-sm-4 text-end fw-bold">Precio Compra:</dt>
+                    <dd class="col-sm-8">$@Model.PrecioCompra</dd>
+
+                    <dt class="col-sm-4 text-end fw-bold">Precio Venta:</dt>
+                    <dd class="col-sm-8">$@Model.PrecioVenta</dd>
+
+                    <dt class="col-sm-4 text-end fw-bold">Cantidad en Stock:</dt>
+                    <dd class="col-sm-8">@Model.CantidadStock</dd>
+
+                    <dt class="col-sm-4 text-end fw-bold">Estado:</dt>
+                    <dd class="col-sm-8">@Model.Estado</dd>
+                </dl>
+                <div class="d-flex justify-content-between">
+                    <form asp-action="Delete" class="d-inline">
+                        <input type="hidden" asp-for="IdProducto" />
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </button>
+                    </form>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Cancelar
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

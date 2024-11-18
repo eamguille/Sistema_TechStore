@@ -4,44 +4,35 @@
     ViewData["Title"] = "Detalles del Usuario";
 }
 
-<h1 class="text-center mb-4 text-primary">Detalles del Usuario</h1>
+<h2 class="text-center mb-4">Detalles del Usuario</h2>
 
-<div class="container">
-    <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white text-center">
-            <h5 class="mb-0">@Model.NombreUsuario</h5>
-        </div>
-        <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-4 text-end fw-bold">Nombres:</dt>
-                <dd class="col-sm-8">@Model.Nombres</dd>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <dl class="row">
+            <dt class="col-sm-4 text-end fw-bold">Nombres:</dt>
+            <dd class="col-sm-8">@Model.Nombres</dd>
 
-                <dt class="col-sm-4 text-end fw-bold">Apellidos:</dt>
-                <dd class="col-sm-8">@Model.Apellidos</dd>
+            <dt class="col-sm-4 text-end fw-bold">Apellidos:</dt>
+            <dd class="col-sm-8">@Model.Apellidos</dd>
 
-                <dt class="col-sm-4 text-end fw-bold">Nombre de Usuario:</dt>
-                <dd class="col-sm-8">@Model.NombreUsuario</dd>
+            <dt class="col-sm-4 text-end fw-bold">Nombre de Usuario:</dt>
+            <dd class="col-sm-8">@Model.NombreUsuario</dd>
 
-                <dt class="col-sm-4 text-end fw-bold">Email:</dt>
-                <dd class="col-sm-8">@Model.Email</dd>
+            <dt class="col-sm-4 text-end fw-bold">Correo Electrónico:</dt>
+            <dd class="col-sm-8">@Model.Email</dd>
 
-                <dt class="col-sm-4 text-end fw-bold">Teléfono:</dt>
-                <dd class="col-sm-8">@Model.Telefono</dd>
+            <dt class="col-sm-4 text-end fw-bold">Teléfono:</dt>
+            <dd class="col-sm-8">@Model.Telefono</dd>
 
-                <dt class="col-sm-4 text-end fw-bold">Dirección:</dt>
-                <dd class="col-sm-8">@Model.Direccion</dd>
+            <dt class="col-sm-4 text-end fw-bold">Dirección:</dt>
+            <dd class="col-sm-8">@Model.Direccion</dd>
 
-                <dt class="col-sm-4 text-end fw-bold">Rol:</dt>
-                <dd class="col-sm-8">@Model.Rol</dd>
-            </dl>
-        </div>
-        <div class="card-footer bg-light text-center">
-            <a asp-action="Edit" asp-route-id="@Model?.IdUsuario" class="btn btn-primary btn-sm me-2">
-                <i class="bi bi-pencil-square"></i> Editar Usuario
-            </a>
-            <a asp-action="Index" class="btn btn-secondary btn-sm">
-                <i class="bi bi-arrow-left"></i> Regresar a Usuarios
-            </a>
+            <dt class="col-sm-4 text-end fw-bold">Rol:</dt>
+            <dd class="col-sm-8">@Model.Rol</dd>
+        </dl>
+        <div class="d-flex justify-content-between">
+            <a asp-action="Edit" asp-route-id="@Model.IdUsuario" class="btn btn-primary"><i class="bi bi-pencil-square"></i> Editar Usuario</a>
+            <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Volver a Usuarios</a>
         </div>
     </div>
 </div>

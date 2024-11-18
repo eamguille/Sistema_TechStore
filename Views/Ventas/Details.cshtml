@@ -1,54 +1,44 @@
 @model Techstore_WebApp.Models.DB.VentasEmpresa
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles de la Venta";
 }
 
-<h1>Details</h1>
+<h2 class="text-center mb-4 text-primary">Detalles de la Venta</h2>
 
-<div>
-    <h4>VentasEmpresa</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaVenta)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaVenta)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TotalVenta)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TotalVenta)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MetodoPago)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MetodoPago)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EstadoVenta)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EstadoVenta)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdClienteNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdClienteNavigation.IdCliente)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdUsuarioNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdUsuarioNavigation.IdUsuario)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdVenta">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="container">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white text-center">
+            <h5 class="mb-0">Venta N° @Model.IdVenta</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4 text-end fw-bold">Fecha de Venta:</dt>
+                <dd class="col-sm-8">@Model.FechaVenta</dd>
+
+                <dt class="col-sm-4 text-end fw-bold">Total Venta:</dt>
+                <dd class="col-sm-8">$@Model.TotalVenta</dd>
+
+                <dt class="col-sm-4 text-end fw-bold">Método de Pago:</dt>
+                <dd class="col-sm-8">@Model.MetodoPago</dd>
+
+                <dt class="col-sm-4 text-end fw-bold">Estado:</dt>
+                <dd class="col-sm-8">@Model.EstadoVenta</dd>
+
+                <dt class="col-sm-4 text-end fw-bold">Cliente:</dt>
+                <dd class="col-sm-8">@Model.IdClienteNavigation.NombreCliente</dd>
+
+                <dt class="col-sm-4 text-end fw-bold">Usuario:</dt>
+                <dd class="col-sm-8">@Model.IdUsuarioNavigation.NombreUsuario</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-center">
+            <a asp-action="Edit" asp-route-id="@Model?.IdVenta" class="btn btn-primary btn-sm me-2">
+                <i class="bi bi-pencil-square"></i> Editar
+            </a>
+            <a asp-action="Index" class="btn btn-secondary btn-sm">
+                <i class="bi bi-arrow-left"></i> Regresar
+            </a>
+        </div>
+    </div>
 </div>

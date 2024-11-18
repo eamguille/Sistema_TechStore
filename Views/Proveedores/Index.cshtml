@@ -6,9 +6,11 @@
 
 <h2 class="text-center mb-5">Proveedores</h2>
 
-<div class="d-flex justify-content-between flex-wrap mb-4">
-    <a asp-action="Create" class="btn btn-success">Agregar Nuevo Proveedor</a>
-    <div class="w-100 w-md-50 mt-3 mt-md-0">
+<div class="row justify-content-between align-items-center mb-4">
+    <div class="col-12 col-md-auto mb-3 mb-md-0">
+        <a asp-action="Create" class="btn btn-success w-100">Agregar Nuevo Proveedor</a>
+    </div>
+    <div class="col-12 col-md-6">
         <input type="text" id="buscador" class="form-control" placeholder="Buscar un proveedor...">
     </div>
 </div>
@@ -18,10 +20,10 @@
         <thead class="table-light text-center">
             <tr>
                 <th>Nombre</th>
-                <th>DUI</th>
+                <th class="d-none d-sm-table-cell">DUI</th>
                 <th>Teléfono</th>
-                <th>Email</th>
-                <th>Dirección</th>
+                <th class="d-none d-md-table-cell">Email</th>
+                <th class="d-none d-lg-table-cell">Dirección</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -30,10 +32,10 @@
             {
                 <tr class="text-center">
                     <td>@Html.DisplayFor(modelItem => item.NombreProveedor)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Dui)</td>
+                    <td class="d-none d-sm-table-cell">@Html.DisplayFor(modelItem => item.Dui)</td>
                     <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Direccion)</td>
+                    <td class="d-none d-md-table-cell">@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td class="d-none d-lg-table-cell">@Html.DisplayFor(modelItem => item.Direccion)</td>
                     <td>
                         <div class="d-flex justify-content-center gap-2">
                             <a asp-action="Edit" asp-route-id="@item.IdProveedor" class="btn btn-primary btn-sm" title="Editar">
@@ -86,10 +88,10 @@
 
                 fila.innerHTML = `
                             <td>${proveedor.nombreProveedor}</td>
-                            <td>${proveedor.dui}</td>
+                            <td class="d-none d-sm-table-cell">${proveedor.dui}</td>
                             <td>${proveedor.telefono}</td>
-                            <td>${proveedor.email}</td>
-                            <td>${proveedor.direccion}</td>
+                            <td class="d-none d-md-table-cell">${proveedor.email}</td>
+                            <td class="d-none d-lg-table-cell">${proveedor.direccion}</td>
                             <td>
                                 <div class="d-flex justify-content-center gap-2">
                                     <a href="/Proveedores/Edit/${proveedor.idProveedor}" class="btn btn-primary btn-sm" title="Editar">

@@ -1,27 +1,25 @@
 @model IEnumerable<Techstore_WebApp.Models.DB.Usuario>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Usuarios";
 }
 
-<h2 class="mb-5 text-center">Usuarios</h2>
+<h2 class="text-center mb-5">Usuarios</h2>
 
-<div class="d-flex justify-content-between flex-wrap mb-3">
-    <div>
-        <a asp-action="Create" class="btn btn-success">Agregar nuevo usuario</a>
-    </div>
-    <div class="w-100 w-md-50 mt-2 mt-md-0">
-        <input type="text" id="buscador" class="form-control" placeholder="Busca un usuario...">
+<div class="d-flex justify-content-between flex-wrap mb-4">
+    <a asp-action="Create" class="btn btn-success">Agregar Nuevo Usuario</a>
+    <div class="w-100 w-md-50 mt-3 mt-md-0">
+        <input type="text" id="buscador" class="form-control" placeholder="Buscar un usuario...">
     </div>
 </div>
 
 <div class="table-responsive">
     <table class="table table-striped table-hover align-middle">
-        <thead class="table-light">
-            <tr class="text-center">
+        <thead class="table-light text-center">
+            <tr>
                 <th>Nombres</th>
                 <th class="d-none d-sm-table-cell">Apellidos</th>
-                <th class="d-none d-md-table-cell">Nombre Usuario</th>
+                <th class="d-none d-md-table-cell">Usuario</th>
                 <th class="d-none d-lg-table-cell">Email</th>
                 <th class="d-none d-lg-table-cell">Teléfono</th>
                 <th class="d-none d-xl-table-cell">Dirección</th>
@@ -42,13 +40,13 @@
                     <td class="d-none d-xl-table-cell">@Html.DisplayFor(modelItem => item.Rol)</td>
                     <td>
                         <div class="d-flex justify-content-center gap-2">
-                            <a asp-action="Edit" class="btn btn-primary btn-sm" asp-route-id="@item.IdUsuario" title="Editar">
+                            <a asp-action="Edit" asp-route-id="@item.IdUsuario" class="btn btn-primary btn-sm" title="Editar">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a asp-action="Details" class="btn btn-warning btn-sm" asp-route-id="@item.IdUsuario" title="Detalles">
+                            <a asp-action="Details" asp-route-id="@item.IdUsuario" class="btn btn-warning btn-sm" title="Detalles">
                                 <i class="bi bi-archive"></i>
                             </a>
-                            <a asp-action="Delete" class="btn btn-danger btn-sm" asp-route-id="@item.IdUsuario" title="Eliminar">
+                            <a asp-action="Delete" asp-route-id="@item.IdUsuario" class="btn btn-danger btn-sm" title="Eliminar">
                                 <i class="bi bi-trash-fill"></i>
                             </a>
                         </div>
@@ -66,9 +64,7 @@
 
             try {
                 const response = await fetch(`/Usuarios/Buscador?texto=${encodeURIComponent(texto)}`);
-                if (!response.ok) {
-                    throw new Error('Error al buscar el usuario');
-                }
+                if (!response.ok) throw new Error('Error al buscar el usuario');
 
                 const usuarios = await response.json();
                 actualizarTabla(usuarios);
@@ -87,26 +83,24 @@
             }
 
             usuarios.forEach(usuario => {
-                const fila = document.createElement('tr');
-                fila.classList.add('text-center');
-
-                fila.innerHTML = `
-                            <td>${usuario.nombres}</td>
-                            <td class="d-none d-sm-table-cell">${usuario.apellidos}</td>
-                            <td class="d-none d-md-table-cell">${usuario.nombreUsuario}</td>
-                            <td class="d-none d-lg-table-cell">${usuario.email}</td>
-                            <td class="d-none d-lg-table-cell">${usuario.telefono}</td>
-                            <td class="d-none d-xl-table-cell">${usuario.direccion}</td>
-                            <td class="d-none d-xl-table-cell">${usuario.rol}</td>
-                            <td>
-                                <div class="d-flex justify-content-center gap-2">
-                                    <a href="/Usuarios/Edit/${usuario.idUsuario}" class="btn btn-primary btn-sm" title="Editar"><i class="bi bi-pencil-square"></i></a>
-                                    <a href="/Usuarios/Details/${usuario.idUsuario}" class="btn btn-warning btn-sm" title="Detalles"><i class="bi bi-archive"></i></a>
-                                    <a href="/Usuarios/Delete/${usuario.idUsuario}" class="btn btn-danger btn-sm" title="Eliminar"><i class="bi bi-trash-fill"></i></a>
-                                </div>
-                            </td>
+                tabla.innerHTML += `
+                            <tr class="text-center">
+                                <td>${usuario.nombres}</td>
+                                <td class="d-none d-sm-table-cell">${usuario.apellidos}</td>
+                                <td class="d-none d-md-table-cell">${usuario.nombreUsuario}</td>
+                                <td class="d-none d-lg-table-cell">${usuario.email}</td>
+                                <td class="d-none d-lg-table-cell">${usuario.telefono}</td>
+                                <td class="d-none d-xl-table-cell">${usuario.direccion}</td>
+                                <td class="d-none d-xl-table-cell">${usuario.rol}</td>
+                                <td>
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <a href="/Usuarios/Edit/${usuario.idUsuario}" class="btn btn-primary btn-sm" title="Editar"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="/Usuarios/Details/${usuario.idUsuario}" class="btn btn-warning btn-sm" title="Detalles"><i class="bi bi-archive"></i></a>
+                                        <a href="/Usuarios/Delete/${usuario.idUsuario}" class="btn btn-danger btn-sm" title="Eliminar"><i class="bi bi-trash-fill"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
                         `;
-                tabla.appendChild(fila);
             });
         }
     </script>
